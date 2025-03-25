@@ -1,11 +1,9 @@
 import React from "react";
-import Navbar from "../components/Navbar";
-import Heroslider from "../components/HeroSlider";
+import Header from "../components/header/header";
 
 const Home = () => {
   return <div>
-    <Navbar />
-   <Heroslider />
+  <Header />
   </div>;
 };
 

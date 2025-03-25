@@ -1,46 +1,55 @@
 import React from 'react';
-
+import { assets } from '../../assets/assets'; // Importing assets
+import 'bootstrap/dist/css/bootstrap.min.css'; // Bootstrap import
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import './header.css'; // Component-specific CSS
+import '../../App.css'; // Global CSS
 import { Link } from 'react-router-dom';
-
+import Home from '../../pages/Home';
+import About from '../../pages/About';
+import Contact from '../../pages/Contact';
 const Header = () => {
   return (
-    <header className='header_main'>
-        <div className='container'>
-            <div className='header_inr'>
-                <div className='logo_main'>
-                    <Link to="/" className='logo_otr'>
-                        <img className='logo_img' src='' alt='' />
-                    </Link>
-                </div>
-                <nav className='menu_otr'>
-                    <ul className='menu_ul'>
-                        <li className='menu_li'>
-                            <Link to='/' className='menu_a heading-ssb'>Home</Link>
-                        </li>
-                        <li className='menu_li'>
-                            <Link to='/' className='menu_a heading-ssb'>About</Link>
-                        </li>
-                        <li className='menu_li'>
-                            <Link to='/' className='menu_a heading-ssb'>Pages</Link>
-                        </li>
-                        <li className='menu_li'>
-                            <Link to='/' className='menu_a heading-ssb'>Blog</Link>
-                        </li>
-                        <li className='menu_li'>
-                            <Link to='/' className='menu_a heading-ssb'>Contact</Link>
-                        </li>
-                    </ul>
-                </nav>
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div className="container">
+        {/* Logo */}
+        <Link className="navbar-brand logo" href="#">
+          <img src={assets.logo} alt="Logo" width="100" />
+        </Link>
 
-                <div className='action_otr'>
-                    <Link to='/' className='primary_btn'>
-                        <span className='button_text'>Sign In</span>
-                    </Link>
-                </div>
-            </div>
+        {/* Responsive Toggle Button */}
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+
+        {/* Navbar Items */}
+        <div className="collapse navbar-collapse " id="navbarNav">
+          <ul className="navbar-nav ms-auto ">
+            <li className="nav-item">
+              <Link className="nav-link " to={"Home"}>Home</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to={"About"}>About</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to={"Contact"}>Contact</Link>
+            </li>
+          </ul>
+
+          {/* Sign-in Button */}
+          <button className="btn primary_btn ms-3 signin">Sign in</button>
         </div>
-    </header>
-  )
-}
+      </div>
+    </nav>
+  );
+};
 
-export default Header
+export default Header;

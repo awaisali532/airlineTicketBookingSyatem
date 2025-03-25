@@ -11,6 +11,7 @@
      margin: 0;
      padding: 0;
      box-sizing: border-box;
+     font-family: "Barlow", sans-serif;
 }
 
 body {
@@ -114,9 +115,9 @@ img {
 
 .primary_btn {
     display: inline-flex;
-    padding: 16px 25px;
+    padding: 13px 25px;
     background-color: var(--primary-color);
-    border-radius: 8px;
+    border-radius: 2px;
     overflow: hidden;
     position: relative;
     z-index: 1;

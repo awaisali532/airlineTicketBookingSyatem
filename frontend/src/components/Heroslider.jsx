@@ -5,7 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 const FlightSlider = () => {
   return (
-    <div className="slider-container">
+    <div className="slider-container position-relative">
       <Carousel fade interval={3000}> {/* Auto slide every 3 sec */}
         <Carousel.Item>
           <img

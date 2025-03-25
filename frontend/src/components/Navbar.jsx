@@ -1,14 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { assets } from "../assets/assets";
 // import "./Navbar.css"; // Import CSS for custom styles
 
 const Navbar = () => {
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-danger custom-navbar">
+    <nav className="navbar navbar-expand-lg navbar-light custom-navbar position-absolute z-2">
       <div className="container">
         {/* Left: Logo */}
         <Link className="navbar-brand" to="/">
-          <img src="logo.png" alt="Logo" width="40" />
+          <img src={assets.logo} alt="Logo" width="150" />
         </Link>
 
         {/* Mobile Toggle Button */}

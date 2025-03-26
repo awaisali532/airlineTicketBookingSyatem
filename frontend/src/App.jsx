@@ -11,9 +11,11 @@ import FlightDetails from "./pages/FlightDetails";
 import FlightSearch from "./pages/FlightSearch";
 import FlightTracking from "./pages/FlightDetails";
 import Auth from "./pages/Auth";
+import Header from "./components/header/header";
 const App = () => {
   return (
     <div>
+        <Header />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />

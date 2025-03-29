@@ -1,90 +1,42 @@
-import React, { useState } from "react";
-import { Form, Button, Container, Row, Col, Dropdown } from "react-bootstrap";
-import { FaExchangeAlt, FaPlaneDeparture } from "react-icons/fa";
+import React from 'react'
+import 'bootstrap/dist/css/bootstrap.min.css'; // Bootstrap import
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import 'bootstrap-icons/font/bootstrap-icons.css'; 
+import './Bookingarea.css'; // Custom CSS import
 
-const FlightBooking = () => {
-    const [tripType, setTripType] = useState("Tour type");
-    const [passengers, setPassengers] = useState("1 Passenger, Economy");
+const Bookingarea = () => {
+  return (
+    <div>
+        <div className='position-relative mt-2'>
+            <div className='container'>
+                <div className='row'>
+                    <div className='col-lg-12'>
+                        <div className='booking-wrap'>
+                            <ul className='nav nav-tabs' id = "myTab" role='tablist'>
+                                <li className='nav-item' role='presentation'>
+                                <button className="nav-link active" id="bOOKing-tab" data-bs-toggle="tab" data-bs-target="#bOOKing-tab-pane" type="button" role="tab" aria-controls="bOOKing-tab-pane" aria-selected="true">
+                                <i class="bi bi-airplane"></i>
+                                air BOOKing</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="trips-tab" data-bs-toggle="tab" data-bs-target="#trips-tab-pane" type="button" role="tab" aria-controls="trips-tab-pane" aria-selected="false">
+                                        <i class="fa-solid fa-file-lines"></i>
+                                        my trips</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="check-tab" data-bs-toggle="tab" data-bs-target="#check-tab-pane" type="button" role="tab" aria-controls="check-tab-pane" aria-selected="false"><i class="fa-regular fa-circle-check"></i> check-in</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="flight-tab" data-bs-toggle="tab" data-bs-target="#flight-tab-pane" type="button" role="tab" aria-controls="flight-tab-pane" aria-selected="false"><i class="fa-regular fa-clock"></i>Flight status</button>
+                                    </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  )
+}
 
-    return (
-        <Container className="p-4 bg-light rounded shadow">
-            {/* Tabs */}
-            <Row className="bg-primary text-white p-2 rounded-top">
-                <Col className="text-center fw-bold">✈ AIR BOOKING</Col>
-                <Col className="text-center fw-bold">📑 MY TRIPS</Col>
-                <Col className="text-center fw-bold">✔ CHECK-IN</Col>
-                <Col className="text-center fw-bold">📍 FLIGHT STATUS</Col>
-            </Row>
-
-            {/* Flight Selection */}
-            <Row className="bg-white p-3 rounded-bottom">
-                <Col md={2} className="d-flex align-items-center bg-light p-2">
-                    <Form.Group className="w-100">
-                        <Form.Label>From</Form.Label>
-                        <Form.Control type="text" placeholder="Enter city" />
-                    </Form.Group>
-                    <FaExchangeAlt className="mx-2 text-primary fs-4" />
-                    <Form.Group className="w-100">
-                        <Form.Label>To</Form.Label>
-                        <Form.Control type="text" placeholder="Enter city" />
-                    </Form.Group>
-                </Col>
-
-                <Col md={2} className="d-flex align-items-center bg-light p-2">
-                    <Form.Label className="w-100">Trip</Form.Label>
-                    <Dropdown className="w-100">
-                        <Dropdown.Toggle variant="light" className="w-100">
-                            {tripType}
-                        </Dropdown.Toggle>
-                        <Dropdown.Menu>
-                            <Dropdown.Item onClick={() => setTripType("One Way")}>One Way</Dropdown.Item>
-                            <Dropdown.Item onClick={() => setTripType("Round Trip")}>Round Trip</Dropdown.Item>
-                        </Dropdown.Menu>
-                    </Dropdown>
-                </Col>
-
-                <Col md={3} className="d-flex align-items-center bg-light p-2">
-                    <Form.Group className="w-50">
-                        <Form.Label>Depart</Form.Label>
-                        <Form.Control type="date" />
-                    </Form.Group>
-                    <span className="mx-2">-</span>
-                    <Form.Group className="w-50">
-                        <Form.Label>Return</Form.Label>
-                        <Form.Control type="date" />
-                    </Form.Group>
-                </Col>
-
-                <Col md={3} className="d-flex align-items-center bg-light p-2">
-                    <Form.Label className="w-100">Passenger / Class</Form.Label>
-                    <Dropdown className="w-100">
-                        <Dropdown.Toggle variant="light" className="w-100">
-                            {passengers}
-                        </Dropdown.Toggle>
-                        <Dropdown.Menu>
-                            <Dropdown.Item onClick={() => setPassengers("1 Passenger, Economy")}>
-                                1 Passenger, Economy
-                            </Dropdown.Item>
-                            <Dropdown.Item onClick={() => setPassengers("2 Passengers, Business")}>
-                                2 Passengers, Business
-                            </Dropdown.Item>
-                        </Dropdown.Menu>
-                    </Dropdown>
-                </Col>
-
-                <Col md={2} className="d-flex align-items-center">
-                    <Button variant="warning" className="w-100 fw-bold">
-                        Show Flights <FaPlaneDeparture />
-                    </Button>
-                </Col>
-            </Row>
-
-            {/* Add Promo Code */}
-            <Row className="mt-2">
-                <Col className="text-center text-primary">+ Add Promo Code</Col>
-            </Row>
-        </Container>
-    );
-};
-
-export default FlightBooking;
+export default Bookingarea

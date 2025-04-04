@@ -1,7 +1,12 @@
 import React from "react";
+import SimpleHeader from "../components/simpleHeader/SimpleHeader";
 
 const About = () => {
-  return <div>About</div>;
+  return 
+  
+  <div>
+    <SimpleHeader />
+  </div>
 };
 
 export default About;

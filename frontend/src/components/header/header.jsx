@@ -33,7 +33,7 @@ const Header = () => {
         <div className="collapse navbar-collapse " id="navbarNav">
           <ul className="navbar-nav ms-auto ">
             <li className="nav-item">
-              <Link className="nav-link " to={"/home"}>Home</Link>
+              <Link className="nav-link " to={"/"}>Home</Link>
             </li>
             <li className="nav-item">
               <Link className="nav-link" to={"/about"}>About</Link>
@@ -44,7 +44,7 @@ const Header = () => {
           </ul>
 
           {/* Sign-in Button */}
-          <Link to={"/login"} className="btn custom_btn ms-3 signin">Sign in</Link>
+          <Link to={"/login"} className="btn custom_btn ms-3 signin ">Sign in</Link>
         </div>
       </div>
     </nav>

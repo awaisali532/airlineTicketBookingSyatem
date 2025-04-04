@@ -1,8 +1,59 @@
+/* Main Login Page */
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Ensures form starts right after header */
+  align-items: center;
+}
+
+/* Remove unwanted spacing */
+.simple-header-area + .login-page {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+/* Form Card Styling */
 .card {
-    border-radius: 1rem;
+  border-radius: 1rem;
+  padding: 20px;
+  max-width: 400px; /* Set max width for better alignment */
+  max-height: 80vh; /* Prevents card from being too tall */
+  overflow-y: auto; /* Allows scrolling inside the form if needed */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Button Styling */
+button.btn-link {
+  font-size: 0.85rem;
+}
+
+/* Ensure no unnecessary scrolling on desktop */
+body, html {
+  overflow: hidden;
+}
+
+/* Make adjustments for mobile screens */
+@media (max-width: 768px) {
+  .login-page {
+    justify-content: flex-start; /* Moves the form up */
+    padding-bottom: 20px;
   }
-  
-  button.btn-link {
-    font-size: 0.85rem;
+
+  .card {
+    max-width: 90%; /* Adjust width for mobile */
+    max-height: 70vh; /* Reduce card height */
+    padding: 15px;
   }
-  
+
+  /* Reduce input & button sizes for mobile */
+  input, button {
+    padding: 8px;
+    font-size: 14px;
+  }
+
+  button {
+    padding: 10px;
+    font-size: 14px;
+  }
+}

@@ -1,7 +1,4 @@
-.signin{
-    font-weight: bold;
-    font-family: poppins;
-}
+
 .navbar-nav .nav-link {
     color: var(--white-color) !important; /* Using the white color from your :root */
   }

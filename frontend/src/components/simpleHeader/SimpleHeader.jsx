@@ -3,6 +3,8 @@ import { useLocation } from "react-router-dom";
 import "./SimpleHeader.css";
 import bgImage from '../../assets/img/simpleHeader/bg.png';
 import bg2 from '../../assets/img/simpleHeader/about.webp';
+import bg3 from '../../assets/img/simpleHeader/contact.png';
+import bg4 from '../../assets/img/simpleHeader/contact1.avif';
 const SimpleHeader = () => {
   const location = useLocation();
   
@@ -14,7 +16,11 @@ const SimpleHeader = () => {
     '/about': {
       title: "AboutUs",
       image: `url(${bg2})`
-    }
+    },
+    '/contact': {
+      title: "Contact Us",
+      image: `url(${bg4})`
+    },
   };
 
   const currentContent = pageContent[location.pathname] || {

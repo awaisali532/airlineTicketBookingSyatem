@@ -8,6 +8,12 @@
      --transition: 0.5s;
      
 }
+.text-secondary-custom {
+     color: var(--secondary-color);
+}
+.text-primary-custom {
+     color: var(--primary-color);
+}
 label{
      cursor: pointer;
 }

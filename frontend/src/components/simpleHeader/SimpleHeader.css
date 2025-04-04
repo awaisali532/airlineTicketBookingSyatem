@@ -1,11 +1,12 @@
 .simple-header-area {
     position: relative;
     width: 100%;
-    height: 35vh; /* Reduced height */
+    height: 30vh; /* Reduced height */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    background-attachment: fixed; /* Keeps background fixed */
+    /* background-attachment: fixed;  */
+    object-fit: cover;
   }
   
 .overlay {

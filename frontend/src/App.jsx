@@ -3,14 +3,14 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-import About from "./pages/About";
+import About from "./pages/about/About";
 import Checkin from "./pages/Checkin";
 import Confirmation from "./pages/Confirmation";
-import Contact from "./pages/Contact";
+import Contact from "./pages/contact/Contact";
 import FlightDetails from "./pages/FlightDetails";
 import FlightSearch from "./pages/FlightSearch";
 import FlightTracking from "./pages/FlightDetails";
-import Header from "./components/header/header";
+import Header from "./components/header/Header";
 import Login from "./pages/login/Login";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 const App = () => {

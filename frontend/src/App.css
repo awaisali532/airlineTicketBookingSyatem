@@ -6,8 +6,11 @@
      --white-color: #ffffff;
      --bs-blue: #0d6efd;
      --transition: 0.5s;
+     
 }
-
+label{
+     cursor: pointer;
+}
 * {
      margin: 0;
      padding: 0;

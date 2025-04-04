@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'; // Bootstrap import
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import 'bootstrap-icons/font/bootstrap-icons.css'; 
 import './Bookingarea.css'; // Custom CSS import
+import Bookingcontent from './bookingcontent';
 
 const Bookingarea = () => {
   return (
@@ -30,7 +31,9 @@ const Bookingarea = () => {
                                         <button class="nav-link" id="flight-tab" data-bs-toggle="tab" data-bs-target="#flight-tab-pane" type="button" role="tab" aria-controls="flight-tab-pane" aria-selected="false"><i class="fa-regular fa-clock"></i>Flight status</button>
                                     </li>
                             </ul>
+                            <Bookingcontent/>
                         </div>
+
                     </div>
                 </div>
             </div>

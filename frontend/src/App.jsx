@@ -11,13 +11,14 @@ import FlightDetails from "./pages/FlightDetails";
 import FlightSearch from "./pages/FlightSearch";
 import FlightTracking from "./pages/FlightDetails";
 import Header from "./components/header/header";
-import Login from "./pages/Login";
+import Login from "./pages/login/Login";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 const App = () => {
   return (
     <div>
         <Header />
       <Routes>
+        
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/checkin" element={<Checkin />} />

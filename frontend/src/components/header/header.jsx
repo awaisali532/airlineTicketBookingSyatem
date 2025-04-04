@@ -5,6 +5,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import './header.css'; // Component-specific CSS
 import '../../App.css'; // Global CSS
 import { Link } from 'react-router-dom';
+// import Login from '../../pages/Login';
 
 const Header = () => {
   return (
@@ -43,7 +44,7 @@ const Header = () => {
           </ul>
 
           {/* Sign-in Button */}
-          <button className="btn primary_btn ms-3 signin">Sign in</button>
+          <Link to={"/login"} className="btn custom_btn ms-3 signin">Sign in</Link>
         </div>
       </div>
     </nav>

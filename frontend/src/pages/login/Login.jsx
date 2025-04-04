@@ -107,7 +107,7 @@ const Login = () => {
               </span>
             </div>
 
-            <button type="submit" className="btn custom_btn w-100">
+            <button type="submit" className="btn hover-btn custom_btn w-100 mt-3">
               {isLogin ? "Login" : "Sign Up"}
             </button>
           </form>

@@ -119,7 +119,7 @@ const Contact = () => {
 
             {/* Submit Button */}
             <div className="text-center">
-              <button type="submit" className="btn  custom_btn">
+              <button type="submit" className="btn  custom_btn hover-btn">
                 Submit Inquiry
               </button>
             </div>

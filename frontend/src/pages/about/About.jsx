@@ -54,7 +54,7 @@ const About = () => {
       </Row>
       <Row className="mt-4">
         <Col>
-          <Button className='custom_btn' size="lg">Explore Flights</Button>
+          <Button className='custom_btn hover-btn' size="lg">Explore Flights</Button>
         </Col>
       </Row>
     </Container>

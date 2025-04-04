@@ -1,225 +1,192 @@
-.booking-form {
-    margin-right: 0;
-    padding-right: 0;
-  }
-  
-  .booking-form ul {
-    margin-right: 0;
-    padding-right: 0;
-  }
-  
-  .booking-form ul li {
-    margin-right: 0;
-    padding-right: 0;
-  }
-  
-
-
-
-.tab-content-wrap {
-  /* background: #fff; */
-  padding: 25px;
-  border-radius: 0 0 20px 20px;
+/* Horizontal Form Styles */
+.booking-form-horizontal {
+  background: #f8f3e7;
+  border: 1px solid #ebebeb;
+  border-radius: 4px;
+  margin-bottom: 20px;
 }
-input {
-    border: none;
-    outline: none;
-  }
-.content-top ul {
+/* Remove borders from all input fields */
+.booking-form-horizontal .form-grp input,
+.booking-form-horizontal .form-grp select {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Remove focus/hover states too if needed */
+.booking-form-horizontal .form-grp input:focus,
+.booking-form-horizontal .form-grp select:focus {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+.booking-form-horizontal .form-grp {
+  position: relative;
+  border-right: 1px solid #dedcd7;
+  padding: 15px 20px;
+  height: 100%;
+}
+
+.booking-form-horizontal .form-grp.no-border {
+  border-right: none;
+}
+
+.booking-form-horizontal .form-grp label {
+  color: #8d5f77;
+  font-size: 12px;
+  font-weight: 500;
+  display: block;
+  margin-bottom: 5px;
+  font-family: "Barlow", sans-serif;
+}
+
+.booking-form-horizontal .form-grp input,
+.booking-form-horizontal .form-grp select {
+  background: transparent;
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+  color: #6a2e4d;
+  width: 100%;
+  font-family: "Barlow", sans-serif;
+  padding: 0;
+}
+
+/* Exchange Icon */
+.booking-form-horizontal .form-grp .exchange-icon {
+  position: absolute;
+  left: -18px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 35px;
+  height: 35px;
+  background: #fefdfb;
+  border-radius: 50%;
+  font-size: 15px;
   display: flex;
-  align-items: flex-end;
-  flex-wrap: wrap;
-}
-ul {
-    margin: 0px;
-    padding: 0px;
-}
-.content-top ul li {
-    font-size: 14px;
-    font-weight: 600;
-    color: #6a2e4d;
-    position: relative;
-    margin-right: 15px;
-    padding-right: 15px;
-    margin-bottom: 12px;
-}
-li {
-    list-style: none;
-}
-.content-top ul li:first-child:before {
-    content: "";
-    position: absolute;
-    right: 0;
-    bottom: 5px;
-    width: 2px;
-    height: 13px;
-    background: #6a2e4d;
-    opacity: .5;
-}
-.content-top ul li:last-child {
-    margin-right: 0;
-    padding-right: 0;
-}
-.content-top ul li span {
-    display: block;
-    font-size: 12px;
-    color: #8d5f77;
-    font-weight: 500;
-    text-align: right;
-    line-height: 1;
-}
-/* bOOKING fORM */
-.booking-form {
-    background: #f8f3e7;
-    border-radius: 4px;
-    border: 1px solid #ebebeb;
-}
-.booking-form ul {
-    display: flex;
-    align-items: center;
-    justify-content: space-between; 
-}
-.booking-form ul li {
-    width: 230px;
-}
-.booking-form .form-grp {
-    position: relative;
-    border-right: 1px solid #dedcd7;
-}
-.booking-form .form-grp input {
-    width: 100%;
-    background: transparent;
-    border: none;
-    font-size: 14px;
-    font-weight: 500;
-    color: #6a2e4d;
-    padding: 20px 20px;
-    height: 74px;
-    font-family: 'Barlow', sans-serif;
-}
-.booking-form .form-grp .exchange-icon {
-    position: absolute;
-    left: -40px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 35px;
-    height: 35px;
-    background: #fefdfb;
-    border-radius: 50%;
-    font-size: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    line-height: 0;
-    color: #622243;
-    border: 1px solid #eeedeb;
-}
-.booking-form .form-grp .exchange-icon:hover {
-    background: #622243;
-    color: #fff;
-    border-color: #622243;
-}
-.booking-form .form-grp label {
-    color: #8d5f77;
-    font-size: 12px;
-    font-weight: 500;
-    display: block;
-    margin-left: 10px;
-    font-family: 'Barlow', sans-serif;
-}
-.booking-form .form-grp.select .form-select {
-    padding: 0px 20px 0 10px;
-    font-size: 16px;
-    font-weight: 500;
-    color: #2a2a2a;
-    vertical-align: middle;
-    background: url('F:\uni\smester 7\Web development\SmesterProject\frontend\src\assets\img\contentform\select_down_arrow.png') no-repeat scroll 97.5% center;
-    background-color: transparent;
-    border-radius: 0;
-    box-shadow: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    transition: .3s ease-in-out;
-    width: 160px;
-    border: none;
-    font-family: 'Barlow', sans-serif;
-    cursor: pointer;
-}
-.booking-form .form-grp.date {
-    padding: 16px 30px;
+  align-items: center;
+  justify-content: center;
+  color: #622243;
+  border: 1px solid #eeedeb;
+  z-index: 2;
+  transition: all 0.3s ease;
 }
 
-.booking-form ul li:nth-child(3) {
-    width: 180px;
-}
-.booking-form ul li:nth-child(4) {
-    width: 270px;
-}
-
-.booking-form .form-grp.date ul li:first-child:before {
-    content: "";
-    position: absolute;
-    right: 0;
-    bottom: 10px;
-    width: 5px;
-    height: 1px;
-    background: #2a2a2a;
-}
-.booking-form .form-grp.date label {
-    margin-left: 0;
-}
-.booking-form .form-grp.date ul li:last-child {
-    margin-right: 0;
-    padding-right: 0;
+.booking-form-horizontal .form-grp .exchange-icon:hover {
+  background: #622243;
+  color: #fff;
+  border-color: #622243;
 }
 
-.booking-form .form-grp.date input {
-    padding: 0;
-    height: auto;
-    color: #2a2a2a;
-    font-weight: 500;
+/* Form Footer Styles */
+.booking-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 15px 0;
 }
 
-.booking-form .form-grp.date ul li {
-    width: 131%;
-    margin-right: 20px;
-    padding-right: 15px;
-    position: relative;
+.promo-code {
+  color: #945274;
+  font-size: 16px;
+  font-weight: 500;
+  margin-right: 25px;
+  text-decoration: none;
+  font-family: "Barlow", sans-serif;
 }
-.booking-form ul li:last-child {
-    width: 240px;
+
+.promo-code:hover {
+  text-decoration: underline;
 }
-.booking-form .form-grp.economy {
-    border: none;
-    padding: 16px 20px;
+
+/* Date Picker Customization */
+.react-datepicker-wrapper {
+  width: 100%;
 }
-.booking-form .form-grp.economy input {
-    padding: 0;
-    height: auto;
-    font-size: 16px;
-    color: #2a2a2a;
-    font-weight: 500;
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+  .booking-form-horizontal .form-grp {
+    padding: 12px 15px;
+  }
 }
-.tab-content-wrap .content-bottom {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
+
+@media (max-width: 768px) {
+  .booking-form-horizontal .row {
     flex-wrap: wrap;
-    margin-top: 20px;
+    position: relative;
+  }
+
+  .booking-form-horizontal .col {
+    flex: 0 0 50%;
+    max-width: 50%;
+    padding: 10px 15px;
+  }
+
+  .booking-form-horizontal .form-grp {
+    border-right: none;
+    border-bottom: 1px solid #dedcd7;
+    padding: 15px 0;
+  }
+
+  /* Exchange Icon - Mobile Position */
+  .booking-form-horizontal .col:nth-child(2) {
+    position: relative;
+    padding-top: 25px;
+  }
+
+  .booking-form-horizontal .form-grp .exchange-icon {
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%) translateY(-50%);
+    bottom: auto;
+  }
+
+  .booking-form-horizontal .form-grp:last-child,
+  .booking-form-horizontal .col:nth-child(odd) .form-grp {
+    border-bottom: none;
+  }
+
+  /* Footer adjustments */
+  .booking-footer {
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .promo-code {
+    margin-right: 0;
+    margin-bottom: 15px;
+  }
 }
-.tab-content-wrap .content-bottom .promo-code {
-    font-size: 16px;
-    color: #945274;
-    font-weight: 500;
-    font-family: 'Barlow', sans-serif;
-    margin-right: 25px;
-}
-.tab-content-wrap .content-bottom .btn {
-    font-size: 16px;
-}
-.btn i {
-    line-height: 0;
-    margin-left: 10px;
-    font-size: 20px;
+
+@media (max-width: 576px) {
+  .booking-form-horizontal .col {
+    flex: 0 0 100%;
+    max-width: 100%;
+    padding: 10px 20px;
+  }
+
+  .booking-form-horizontal .form-grp {
+    border-bottom: 1px solid #dedcd7;
+    padding: 15px 0;
+  }
+
+  .booking-form-horizontal .col:last-child .form-grp {
+    border-bottom: none;
+  }
+
+  /* Adjust icon position for single column */
+  .booking-form-horizontal .col:nth-child(2) {
+    padding-top: 25px;
+  }
+
+  /* Footer adjustments */
+  .booking-footer {
+    align-items: stretch;
+  }
+
+  .show-flights-btn {
+    width: 100%;
+    justify-content: center;
+  }
 }

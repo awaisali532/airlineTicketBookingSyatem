@@ -7,18 +7,17 @@ import About from "./pages/about/About";
 import Checkin from "./pages/Checkin";
 import Confirmation from "./pages/Confirmation";
 import Contact from "./pages/contact/Contact";
-import FlightDetails from "./pages/FlightDetails";
+import FlightDetails from "./pages/flightdetails/FlightDetails";
 import FlightSearch from "./pages/FlightSearch";
-import FlightTracking from "./pages/FlightDetails";
+import FlightTracking from "./pages/FlightTracking";
 import Header from "./components/header/Header";
 import Login from "./pages/login/Login";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 const App = () => {
   return (
     <div>
-        <Header />
+      <Header />
       <Routes>
-        
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/checkin" element={<Checkin />} />
@@ -27,7 +26,7 @@ const App = () => {
         <Route path="/flightdetails" element={<FlightDetails />} />
         <Route path="/flightsearch" element={<FlightSearch />} />
         <Route path="/flighttracking" element={<FlightTracking />} />
-       <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </div>
   );

@@ -1,0 +1,29 @@
+.flight-card {
+  background: #fff;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+}
+
+.airline-logo {
+  width: 50px;
+  height: auto;
+}
+
+.price-section {
+  text-align: center;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .flight-card {
+    text-align: center;
+  }
+
+  .airline-logo {
+    margin: auto;
+  }
+
+  .row > div {
+    margin-bottom: 10px;
+  }
+}

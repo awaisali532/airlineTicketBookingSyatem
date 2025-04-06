@@ -1,5 +1,5 @@
 import React from "react";
-
+import "./FeatureArea.css"; // Import the CSS file for styling
 const FeatureArea = () => {
   return (
     <div>
@@ -9,7 +9,7 @@ const FeatureArea = () => {
             <div class="col-xl-4 col-lg-6 col-sm-10">
               <div class="features-item">
                 <div class="features-icon">
-                  <i class="flaticon-help"></i>
+                  <i class="bi bi-question-circle"></i>
                 </div>
                 <div class="features-content">
                   <h6 class="title">We are now available</h6>
@@ -20,7 +20,7 @@ const FeatureArea = () => {
             <div class="col-xl-4 col-lg-6 col-sm-10">
               <div class="features-item">
                 <div class="features-icon">
-                  <i class="flaticon-plane"></i>
+                  <i class="bi bi-airplane"></i>
                 </div>
                 <div class="features-content">
                   <h6 class="title">International Flight</h6>
@@ -31,7 +31,7 @@ const FeatureArea = () => {
             <div class="col-xl-4 col-lg-6 col-sm-10">
               <div class="features-item">
                 <div class="features-icon">
-                  <i class="flaticon-money-back-guarantee"></i>
+                  <i class="bi bi-currency-dollar"></i>
                 </div>
                 <div class="features-content">
                   <h6 class="title">Check Refund</h6>

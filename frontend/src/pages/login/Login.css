@@ -1,11 +1,4 @@
 /* Main Login Page */
-.login-page {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start; /* Ensures form starts right after header */
-  align-items: center;
-  padding-bottom: 2rem;
-}
 
 /* Remove unwanted spacing */
 .simple-header-area + .login-page {

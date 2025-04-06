@@ -55,7 +55,7 @@
 /* Exchange Icon */
 .booking-form-horizontal .form-grp .exchange-icon {
   position: absolute;
-  left: -18px;
+  left: -48px;
   top: 50%;
   transform: translateY(-50%);
   width: 35px;
@@ -94,9 +94,16 @@
   text-decoration: none;
   font-family: "Barlow", sans-serif;
 }
+.tab-content-wrap .content-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
 
 .promo-code:hover {
-  text-decoration: underline;
+  color: #ffa903;
 }
 
 /* Date Picker Customization */

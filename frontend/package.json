@@ -17,6 +17,8 @@
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
     "date-fns": "^4.1.0",
+    "intersection-observer": "^0.12.2",
+    "odometer": "^0.4.8",
     "react": "^19.0.0",
     "react-bootstrap": "^2.10.9",
     "react-datepicker": "^8.2.1",

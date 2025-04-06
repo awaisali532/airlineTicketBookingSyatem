@@ -13,6 +13,7 @@ import FlightTracking from "./pages/FlightTracking";
 import Header from "./components/header/Header";
 import Login from "./pages/login/Login";
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import BookingDetails from "./pages/bookingDetails/BookingDetails";
 const App = () => {
   return (
     <div>
@@ -24,8 +25,7 @@ const App = () => {
         <Route path="confirmation" element={<Confirmation />} />"
         <Route path="contact" element={<Contact />} />
         <Route path="/flightdetails" element={<FlightDetails />} />
-        <Route path="/flightsearch" element={<FlightSearch />} />
-        <Route path="/flighttracking" element={<FlightTracking />} />
+        <Route path="/booking-details" element={<BookingDetails />} />
         <Route path="/login" element={<Login />} />
       </Routes>
     </div>

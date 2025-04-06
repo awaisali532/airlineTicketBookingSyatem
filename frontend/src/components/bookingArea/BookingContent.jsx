@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import "./BookingContent.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -89,9 +90,9 @@ const Bookingcontent = () => {
         <a href="#" className="promo-code">
           + Add Promo Code
         </a>
-        <button className="custom_btn ">
+        <Link to={"/flightdetails"} className="custom_btn ">
           Show Flights <i className="bi bi-airplane ms-1"></i>
-        </button>
+        </Link>
       </div>
     </div>
   );

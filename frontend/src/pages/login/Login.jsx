@@ -30,16 +30,23 @@ const Login = () => {
   };
 
   return (
-    <div className="login-page" style={{ height: "100vh", overflow: "hidden" }}>
+    <div className="login-page">
       <SimpleHeader />
       <div className="container d-flex align-items-start justify-content-center mt-4">
-        <div className="card p-4 shadow rounded-4 w-100" style={{ maxWidth: "400px" }}>
-          <h2 className="text-center fw-bold mb-4">{isLogin ? "Login" : "Sign Up"}</h2>
+        <div
+          className="card p-4 shadow rounded-4 w-100"
+          style={{ maxWidth: "400px" }}
+        >
+          <h2 className="text-center fw-bold mb-4">
+            {isLogin ? "Login" : "Sign Up"}
+          </h2>
           <form onSubmit={handleSubmit}>
             {/* Keep all your existing form fields exactly the same */}
             {!isLogin && (
               <div className="mb-3">
-                <label className="form-label" htmlFor="name">Name:</label>
+                <label className="form-label" htmlFor="name">
+                  Name:
+                </label>
                 <input
                   id="name"
                   type="text"
@@ -53,7 +60,9 @@ const Login = () => {
             )}
 
             <div className="mb-3">
-              <label className="form-label" htmlFor="email">Email:</label>
+              <label className="form-label" htmlFor="email">
+                Email:
+              </label>
               <input
                 type="email"
                 id="email"
@@ -66,7 +75,9 @@ const Login = () => {
             </div>
 
             <div className="mb-3">
-              <label className="form-label" htmlFor="password">Password:</label>
+              <label className="form-label" htmlFor="password">
+                Password:
+              </label>
               <input
                 type="password"
                 id="password"
@@ -79,7 +90,9 @@ const Login = () => {
             </div>
 
             <div className="d-flex justify-content-between mb-3">
-              <a href="#" className="text-decoration-none small">Forgot password?</a>
+              <a href="#" className="text-decoration-none small">
+                Forgot password?
+              </a>
               <span className="small">
                 {isLogin ? (
                   <span>
@@ -107,7 +120,10 @@ const Login = () => {
               </span>
             </div>
 
-            <button type="submit" className="btn hover-btn custom_btn w-100 mt-3">
+            <button
+              type="submit"
+              className="btn hover-btn custom_btn w-100 mt-3"
+            >
               {isLogin ? "Login" : "Sign Up"}
             </button>
           </form>

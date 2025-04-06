@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import SimpleHeader from "../../components/simpleHeader/SimpleHeader";
 import "./Contact.css";
 
 const Contact = () => {
-  const userName = "John Doe"; 
+  const userName = "John Doe";
 
   const [formData, setFormData] = useState({
     name: "",
@@ -33,13 +33,17 @@ const Contact = () => {
           <h2 className="text-center text-secondary-custom  fw-bold mb-3">
             Welcome, {userName}!
           </h2>
-          <h3 className="text-center text-primary-custom fw-semibold mb-4">Contact Us</h3>
+          <h3 className="text-center text-primary-custom fw-semibold mb-4">
+            Contact Us
+          </h3>
 
           <form onSubmit={handleSubmit}>
             <div className="row">
               {/* Name Field */}
               <div className="col-md-6 col-12 mb-3">
-                <label className="form-label fw-semibold" htmlFor= "name" >Your Name</label>
+                <label className="form-label fw-semibold" htmlFor="name">
+                  Your Name
+                </label>
                 <input
                   id="name"
                   type="text"
@@ -54,7 +58,9 @@ const Contact = () => {
 
               {/* Email Field */}
               <div className="col-md-6 col-12 mb-3">
-                <label className="form-label fw-semibold" htmlFor= "email">Your Email</label>
+                <label className="form-label fw-semibold" htmlFor="email">
+                  Your Email
+                </label>
                 <input
                   id="email"
                   type="email"
@@ -69,7 +75,9 @@ const Contact = () => {
 
               {/* Phone Field */}
               <div className="col-md-6 col-12 mb-3">
-                <label className="form-label fw-semibold" htmlFor= "phone">Phone Number</label>
+                <label className="form-label fw-semibold" htmlFor="phone">
+                  Phone Number
+                </label>
                 <input
                   id="phone"
                   type="tel"
@@ -84,7 +92,9 @@ const Contact = () => {
 
               {/* Subject Dropdown */}
               <div className="col-md-6 col-12 mb-3">
-                <label className="form-label fw-semibold" htmlFor= "subject">Subject</label>
+                <label className="form-label fw-semibold" htmlFor="subject">
+                  Subject
+                </label>
                 <select
                   id="subject"
                   name="subject"
@@ -104,7 +114,9 @@ const Contact = () => {
 
             {/* Message Textarea (Full Width) */}
             <div className="mb-4">
-              <label className="form-label fw-semibold" htmlFor="message">Your Message</label>
+              <label className="form-label fw-semibold" htmlFor="message">
+                Your Message
+              </label>
               <textarea
                 id="message"
                 name="message"

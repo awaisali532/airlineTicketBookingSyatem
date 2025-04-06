@@ -1,10 +1,10 @@
 /* Main Login Page */
 .login-page {
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: flex-start; /* Ensures form starts right after header */
   align-items: center;
+  padding-bottom: 2rem;
 }
 
 /* Remove unwanted spacing */
@@ -29,9 +29,6 @@ button.btn-link {
 }
 
 /* Ensure no unnecessary scrolling on desktop */
-body, html {
-  overflow: hidden;
-}
 
 /* Make adjustments for mobile screens */
 @media (max-width: 768px) {
@@ -47,7 +44,8 @@ body, html {
   }
 
   /* Reduce input & button sizes for mobile */
-  input, button {
+  input,
+  button {
     padding: 8px;
     font-size: 14px;
   }

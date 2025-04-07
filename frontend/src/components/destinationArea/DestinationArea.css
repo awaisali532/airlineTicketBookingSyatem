@@ -1,5 +1,5 @@
 .destination-bg {
-  background-image: url("F:\uni\smester 7\Web development\SmesterProject\frontend\src\assets\img\destination\destination_bg.jpg");
+  background-image: url(../../assets/img/destination/destination_bg.jpg);
   background-position: center;
   background-size: cover;
   position: relative;

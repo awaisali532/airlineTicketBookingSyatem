@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import SimpleHeader from "../../components/simpleHeader/SimpleHeader";
 import { useLocation } from "react-router-dom"; // Import useLocation hook
 import "./BookingDetails.css"; // Assuming you have a CSS file for styles
-
+import bank_img from "../../assets/img/payment/bank.png";
+import jazzcash_img from "../../assets/img/payment/jazzcash.png";
+import easypesa_img from "../../assets/img/payment/easypesa.png";
+import paypal_img from "../../assets/img/payment/Paypal.png";
 const BookingDetails = () => {
   const location = useLocation(); // Get the location object
   const imageSrc = location.state?.image; // Access the image passed from FlightDetails
@@ -282,10 +285,7 @@ const BookingDetails = () => {
                 <div class="widget">
                   <ul class="flight-info">
                     <li>
-                      <img
-                        src="assets/img/icon/sidebar_flight_icon.jpg"
-                        alt=""
-                      />{" "}
+                      {imageSrc && <img src={imageSrc} alt="Flight Logo" />}{" "}
                       <p>
                         12:0 (DEK) <span>Dubai</span>
                       </p>
@@ -298,52 +298,44 @@ const BookingDetails = () => {
                   </ul>
                 </div>
                 <div class="widget">
-                  <h2 class="widget-title">Select Discount Option</h2>
+                  <h2 class="widget-title heading-h2">
+                    Select Discount Option
+                  </h2>
                   <form action="#" class="discount-form">
-                    <i class="flaticon-coupon"></i>
+                    <i className="bi bi-tag"></i>
                     <input type="text" placeholder="Enter Code" />
                     <button type="submit">
-                      <i class="flaticon-tick-1"></i>
+                      <i class="bi bi-check-circle-fill"></i>
                     </button>
                   </form>
                 </div>
                 <div class="widget">
-                  <h2 class="widget-title">Your Preferred Bank</h2>
+                  <h2 class="widget-title heading-h2">Your Preferred Bank</h2>
                   <ul class="preferred-bank-wrap">
                     <li>
                       <a href="#">
-                        <img src="assets/img/images/bank_logo01.png" alt="" />
+                        <img src={bank_img} alt="" />
                       </a>
                     </li>
                     <li>
                       <a href="#">
-                        <img src="assets/img/images/bank_logo02.png" alt="" />
+                        <img src={jazzcash_img} alt="" />
                       </a>
                     </li>
                     <li>
                       <a href="#">
-                        <img src="assets/img/images/bank_logo03.png" alt="" />
+                        <img src={easypesa_img} alt="" />
                       </a>
                     </li>
                     <li>
                       <a href="#">
-                        <img src="assets/img/images/bank_logo04.png" alt="" />
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <img src="assets/img/images/bank_logo05.png" alt="" />
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <img src="assets/img/images/bank_logo06.png" alt="" />
+                        <img src={paypal_img} alt="" />
                       </a>
                     </li>
                   </ul>
                 </div>
                 <div class="widget">
-                  <h2 class="widget-title">Your price summary</h2>
+                  <h2 class="widget-title heading-h2">Your price summary</h2>
                   <div class="price-summary-top">
                     <ul>
                       <li>Details</li>

@@ -53,7 +53,7 @@ ul {
 }
 .booking-list-item-inner .flight-airway {
   margin-right: 10px;
-  min-width: 29%;
+  min-width: 23%;
   margin-bottom: 10px;
 }
 .booking-list-item-inner .flight-info li {
@@ -121,4 +121,34 @@ h5 {
   line-height: 0;
   margin-left: 10px;
   font-size: 20px;
+}
+.flight-info ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.flight-info li {
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+.flight-info .time span {
+  font-weight: bold;
+}
+
+.flight-route {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.flight-route .departure,
+.flight-route .arrival {
+  margin: 0 10px;
+}
+
+.plane-icon {
+  font-size: 20px;
+  margin: 0 10px;
 }

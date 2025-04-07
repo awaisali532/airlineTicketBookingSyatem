@@ -7,13 +7,18 @@ import jazzcash_img from "../../assets/img/payment/jazzcash.png";
 import easypesa_img from "../../assets/img/payment/easypesa.png";
 import paypal_img from "../../assets/img/payment/Paypal.png";
 const BookingDetails = () => {
-  const location = useLocation(); // Get the location object
-  const imageSrc = location.state?.image; // Access the image passed from FlightDetails
+  const { state } = useLocation(); // Access state passed from the previous page
+  const flight = state.flight; // Destructure the flight object
   const [selectedGender, setSelectedGender] = useState("male"); // Default or empty ""
 
   const handleGenderClick = (gender) => {
     setSelectedGender(gender);
   };
+
+  const tax = 35;
+  const discount = 10; // Flat discount, no coupon check
+  const totalAirfare = flight.price + tax;
+  const totalPayable = totalAirfare - discount;
   return (
     <div>
       <SimpleHeader />
@@ -25,7 +30,11 @@ const BookingDetails = () => {
               <div className="customer-details-content">
                 {/* Display the passed image */}
                 <div className="icon">
-                  {imageSrc && <img src={imageSrc} alt="Flight Logo" />}
+                  <img
+                    src={flight.logo}
+                    alt={`${flight.airline} Logo`}
+                    className="logo"
+                  />
                 </div>
                 <div className="content">
                   <h2 className="title">
@@ -65,28 +74,28 @@ const BookingDetails = () => {
         </div>
       </section>
       {/* Booking Details of user  */}
-      <section class="booking-details-area">
-        <div class="container">
-          <div class="row justify-content-center">
-            <div class="col-73">
-              <div class="primary-contact">
-                <i class="bi bi-person"></i>
-                <h2 class="title">Passenger 1: Ms (Primary Contact)</h2>
+      <section className="booking-details-area">
+        <div className="container">
+          <div className="row justify-content-center">
+            <div className="col-73">
+              <div className="primary-contact">
+                <i className="bi bi-person"></i>
+                <h2 className="title">Passenger 1: Ms (Primary Contact)</h2>
               </div>
-              <div class="booking-details-wrap">
+              <div className="booking-details-wrap">
                 <form action="#">
-                  <div class="form-grp select-form">
-                    <div class="icon">
+                  <div className="form-grp select-form">
+                    <div className="icon">
                       <i className="bi bi-person-plus"></i>
                     </div>
-                    <div class="form">
-                      <label for="shortBy">
+                    <div className="form">
+                      <label htmlFor="shortBy">
                         Select Travellers from your Favourties List
                       </label>
                       <select
                         id="shortBy"
                         name="select"
-                        class="form-select"
+                        className="form-select"
                         aria-label="Default select example"
                       >
                         <option value="">Select One..</option>
@@ -99,15 +108,15 @@ const BookingDetails = () => {
                   </div>
                   <ul>
                     <li>
-                      <div class="form-grp">
-                        <div class="icon">
+                      <div className="form-grp">
+                        <div className="icon">
                           <i className="bi bi-person-fill"></i>
                         </div>
-                        <div class="form">
+                        <div className="form">
                           <select
                             id="title"
                             name="select"
-                            class="form-select"
+                            className="form-select"
                             aria-label="Default select example"
                           >
                             <option value="">Mr.</option>
@@ -118,12 +127,12 @@ const BookingDetails = () => {
                       </div>
                     </li>
                     <li>
-                      <div class="form-grp">
+                      <div className="form-grp">
                         <input type="text" placeholder="Give Name" />
                       </div>
                     </li>
                     <li>
-                      <div class="form-grp">
+                      <div className="form-grp">
                         <input type="text" placeholder="Sur Name *" />
                       </div>
                     </li>
@@ -145,18 +154,18 @@ const BookingDetails = () => {
                       </li>
                     </ul>
                   </div>
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-grp">
-                        <div class="icon">
-                          <i class="bi bi-globe"></i>
+                  <div className="row">
+                    <div className="col-md-6">
+                      <div className="form-grp">
+                        <div className="icon">
+                          <i className="bi bi-globe"></i>
                         </div>
-                        <div class="form">
-                          <label for="nationality">Nationality</label>
+                        <div className="form">
+                          <label htmlFor="nationality">Nationality</label>
                           <select
                             id="nationality"
                             name="select"
-                            class="form-select"
+                            className="form-select"
                             aria-label="Default select example"
                           >
                             <option value="">Bangladesh</option>
@@ -170,48 +179,48 @@ const BookingDetails = () => {
                         </div>
                       </div>
                     </div>
-                    <div class="col-md-6">
-                      <div class="form-grp">
-                        <div class="icon">
-                          <i class="bi bi-telephone-outbound"></i>
+                    <div className="col-md-6">
+                      <div className="form-grp">
+                        <div className="icon">
+                          <i className="bi bi-telephone-outbound"></i>
                         </div>
-                        <div class="form">
+                        <div className="form">
                           <input type="number" placeholder="Mobile Number *" />
                         </div>
                       </div>
                     </div>
-                    <div class="col-md-6">
-                      <div class="form-grp">
-                        <div class="icon">
-                          <i class="bi bi-calendar3"></i>
+                    <div className="col-md-6">
+                      <div className="form-grp">
+                        <div className="icon">
+                          <i className="bi bi-calendar3"></i>
                         </div>
-                        <div class="form">
-                          <label for="shortBy">Date of Birth</label>
+                        <div className="form">
+                          <label htmlFor="shortBy">Date of Birth</label>
                           <input
                             type="text"
-                            class="date"
+                            className="date"
                             placeholder="Select Date"
                           />
                         </div>
                       </div>
                     </div>
-                    <div class="col-md-6">
-                      <div class="form-grp">
-                        <div class="icon">
-                          <i class="bi bi-house"></i>
+                    <div className="col-md-6">
+                      <div className="form-grp">
+                        <div className="icon">
+                          <i className="bi bi-house"></i>
                         </div>
-                        <div class="form">
+                        <div className="form">
                           <input type="text" placeholder="Post Code *" />
                         </div>
                       </div>
                     </div>
-                    <div class="col-md-6">
-                      <div class="form-grp">
-                        <div class="icon">
-                          <i class="bi bi-envelope-at"></i>
+                    <div className="col-md-6">
+                      <div className="form-grp">
+                        <div className="icon">
+                          <i className="bi bi-envelope-at"></i>
                         </div>
-                        <div class="form">
-                          <label for="email">Your Email</label>
+                        <div className="form">
+                          <label htmlFor="email">Your Email</label>
                           <input
                             type="email"
                             id="email"
@@ -220,12 +229,12 @@ const BookingDetails = () => {
                         </div>
                       </div>
                     </div>
-                    <div class="col-md-6">
-                      <div class="form-grp">
-                        <div class="icon">
-                          <i class="bi bi-star-fill text-warning"></i>
+                    <div className="col-md-6">
+                      <div className="form-grp">
+                        <div className="icon">
+                          <i className="bi bi-star-fill text-warning"></i>
                         </div>
-                        <div class="form">
+                        <div className="form">
                           <input
                             type="text"
                             placeholder="FlyerNumber :  98265"
@@ -234,13 +243,13 @@ const BookingDetails = () => {
                       </div>
                     </div>
                   </div>
-                  <div class="optional-item">
-                    <div class="form-grp">
-                      <div class="form">
+                  <div className="optional-item">
+                    <div className="form-grp">
+                      <div className="form">
                         <select
                           id="optional"
                           name="select"
-                          class="form-select"
+                          className="form-select"
                           aria-label="Default select example"
                         >
                           <option value="">
@@ -252,12 +261,12 @@ const BookingDetails = () => {
                         </select>
                       </div>
                     </div>
-                    <div class="form-grp">
-                      <div class="form">
+                    <div className="form-grp">
+                      <div className="form">
                         <select
                           id="optionalTwo"
                           name="select"
-                          class="form-select"
+                          className="form-select"
                           aria-label="Default select example"
                         >
                           <option value="">
@@ -270,48 +279,64 @@ const BookingDetails = () => {
                       </div>
                     </div>
                   </div>
-                  <div class="form-grp checkbox-grp">
+                  <div className="form-grp checkbox-grp">
                     <input type="checkbox" id="checkbox" />
-                    <label for="checkbox">
+                    <label htmlFor="checkbox">
                       Add this person to passenger quick pick list
                     </label>
                   </div>
                 </form>
               </div>
             </div>
-            <div class="col-27">
-              <aside class="booking-sidebar">
-                <h2 class="main-title">Booking Info</h2>
-                <div class="widget">
-                  <ul class="flight-info">
+            <div className="col-27">
+              <aside className="booking-sidebar">
+                <h2 className="main-title">Booking Info</h2>
+                <div className="widget">
+                  <ul className="flight-info">
                     <li>
-                      {imageSrc && <img src={imageSrc} alt="Flight Logo" />}{" "}
+                      <img
+                        src={flight.logo}
+                        alt={`${flight.airline} Logo`}
+                        className="logo"
+                      />
                       <p>
-                        12:0 (DEK) <span>Dubai</span>
+                        {new Date(flight.departureTime).toLocaleTimeString([], {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
+                        {flight.fly}
+                        <span>{flight.departureCity}</span>
                       </p>
                     </li>
                     <li>
                       <p>
-                        16:30 (DEK) <span>istanbul</span>
+                        {new Date(flight.arrivalTime).toLocaleTimeString([], {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}{" "}
+                        {flight.arive}
+                        <span>{flight.arrivalCity}</span>
                       </p>
                     </li>
                   </ul>
                 </div>
-                <div class="widget">
-                  <h2 class="widget-title heading-h2">
+                <div className="widget">
+                  <h2 className="widget-title heading-h2">
                     Select Discount Option
                   </h2>
-                  <form action="#" class="discount-form">
+                  <form action="#" className="discount-form">
                     <i className="bi bi-tag"></i>
                     <input type="text" placeholder="Enter Code" />
                     <button type="submit">
-                      <i class="bi bi-check-circle-fill"></i>
+                      <i className="bi bi-check-circle-fill"></i>
                     </button>
                   </form>
                 </div>
-                <div class="widget">
-                  <h2 class="widget-title heading-h2">Your Preferred Bank</h2>
-                  <ul class="preferred-bank-wrap">
+                <div className="widget">
+                  <h2 className="widget-title heading-h2">
+                    Your Preferred Bank
+                  </h2>
+                  <ul className="preferred-bank-wrap">
                     <li>
                       <a href="#">
                         <img src={bank_img} alt="" />
@@ -334,33 +359,35 @@ const BookingDetails = () => {
                     </li>
                   </ul>
                 </div>
-                <div class="widget">
-                  <h2 class="widget-title heading-h2">Your price summary</h2>
-                  <div class="price-summary-top">
+                <div className="widget">
+                  <h2 className="widget-title heading-h2">
+                    Your price summary
+                  </h2>
+                  <div className="price-summary-top">
                     <ul>
                       <li>Details</li>
                       <li>Amount</li>
                     </ul>
                   </div>
-                  <div class="price-summary-detail">
+                  <div className="price-summary-detail">
                     <ul>
                       <li>
-                        Adult x 1 <span>$1,056</span>
+                        Adult x 1 <span> {flight.price.toFixed(2)}</span>
                       </li>
                       <li>
-                        Tax x 1 <span>$35</span>
+                        Tax x 1 <span>${tax.toFixed(2)}</span>
                       </li>
                       <li>
-                        Total Airfare: <span>$1,091</span>
+                        Total Airfare: <span>${totalAirfare.toFixed(2)}</span>
                       </li>
                       <li>
-                        Discount<span>- $110</span>
+                        Discount: <span>${discount.toFixed(2)}</span>
                       </li>
                       <li>
-                        Total Payable<span>$981.00</span>
+                        Total Payable<span>${totalPayable.toFixed(2)}</span>
                       </li>
                     </ul>
-                    <a href="#" class="btn">
+                    <a href="#" className="btn">
                       Pay now
                     </a>
                   </div>

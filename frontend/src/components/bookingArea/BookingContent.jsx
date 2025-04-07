@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import "./BookingContent.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // 🟡 Changed here
+
 const Bookingcontent = () => {
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
@@ -12,8 +13,27 @@ const Bookingcontent = () => {
   const [passenger, setPassenger] = useState("");
   const [promoCode, setPromoCode] = useState("");
 
+  const navigate = useNavigate(); // 🟡 Added for navigation
+
+  // 🟡 Function to check if all fields are filled
+  const isFormValid = () => {
+    return (
+      from.trim() &&
+      to.trim() &&
+      trip &&
+      startDate &&
+      endDate &&
+      passenger.trim()
+    );
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!isFormValid()) {
+      alert("Please fill out all fields before proceeding.");
+      return;
+    }
 
     const bookingData = {
       from,
@@ -28,7 +48,10 @@ const Bookingcontent = () => {
     console.log("Form Submitted:", bookingData);
 
     // TODO: Send to backend via fetch/axios
+
+    navigate("/flightdetails"); // 🟡 Navigate only if form is valid
   };
+
   const handleExchange = () => {
     const temp = from;
     setFrom(to);
@@ -128,31 +151,53 @@ const Bookingcontent = () => {
             </div>
           </div>
 
-          {/* Passenger/Class */}
+          {/* 🟡 Passenger/Class Dropdown */}
           <div className="col">
-            <div className="form-grp no-border">
+            <div className="form-grp">
               <label htmlFor="passenger">Passenger/Class</label>
-              <input
-                type="text"
+              <select
                 id="passenger"
                 name="passenger"
-                placeholder="1 Passenger, Economy"
+                className="w-100 bg-transparent border-0"
                 value={passenger}
                 onChange={(e) => setPassenger(e.target.value)}
-              />
+              >
+                <option value="">Select Option</option>
+                <option value="1 Passenger, Economy">
+                  1 Passenger, Economy
+                </option>
+                <option value="1 Passenger, Premium Economy">
+                  1 Passenger, Premium Economy
+                </option>
+                <option value="1 Passenger, Business">
+                  1 Passenger, Business
+                </option>
+                <option value="1 Passenger, First">1 Passenger, First</option>
+              </select>
             </div>
           </div>
         </div>
+
+        {/* 🟡 Submit Button moved inside form for full control */}
+        <div className="booking-footer mt-3 d-flex justify-content-end align-items-center">
+          <a href="booking-details.html" className="promo-code">
+            + Add Promo code
+          </a>
+
+          {/* 🟡 Submit button disabled until form is valid */}
+          <button
+            type="submit"
+            className="custom_btn"
+            disabled={!isFormValid()}
+            style={{
+              opacity: isFormValid() ? 1 : 0.5,
+              cursor: isFormValid() ? "pointer" : "not-allowed",
+            }}
+          >
+            Show Flights <i className="bi bi-airplane ms-1"></i>
+          </button>
+        </div>
       </form>
-      {/* Promo Code & Submit Button */}
-      <div className="booking-footer  mt-3 ">
-        <a href="booking-details.html" class="promo-code">
-          + Add Promo code
-        </a>
-        <Link to={"/flightdetails"} className="custom_btn">
-          Show Flights <i className="bi bi-airplane ms-1"></i>
-        </Link>
-      </div>
     </div>
   );
 };

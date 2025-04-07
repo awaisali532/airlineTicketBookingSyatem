@@ -88,3 +88,28 @@
     font-size: 20px;
   }
 }
+
+/* Booking Details Area  */
+.booking-details-area {
+  padding: 80px 0 80px;
+  background: #fbf9f2;
+}
+.booking-details-area .primary-contact {
+  display: flex;
+  align-items: center;
+  background: #57112f;
+  padding: 15px 30px;
+  border-radius: 5px 5px 0 0;
+}
+.booking-details-area .primary-contact i {
+  color: #fff;
+  font-size: 20px;
+  margin-right: 10px;
+}
+/* Responsive code  */
+@media (max-width: 1199.98px) {
+  .booking-details-area .row .col-73 {
+    width: 100%;
+    flex: 0 0 100%;
+  }
+}

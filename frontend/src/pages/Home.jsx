@@ -11,12 +11,12 @@ import BookingDetails from "./bookingDetails/BookingDetails";
 const Home = () => {
   return (
     <div className="homepage-wrapper">
-      <BookingDetails />
-      {/* <Slider />
+      {/* <BookingDetails /> */}
+      <Slider />
       <Bookingarea />
       <FeatureArea />
       <DestinationArea />
-      <Footer /> */}
+      <Footer />
     </div>
   );
 };

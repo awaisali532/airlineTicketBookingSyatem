@@ -49,17 +49,21 @@
   }
 }
 
-.slide-1 {
+/* .slide-1 {
   background: url("F:/uni/smester 7/Web development/SmesterProject/frontend/src/assets/img/slider/slider_bg01.jpg")
     center/cover no-repeat;
+} */
+.slide-1 {
+  background: url("../../assets/img/slider/slider_bg01.jpg") center/cover
+    no-repeat;
 }
 .slide-2 {
-  background: url("F:/uni/smester 7/Web development/SmesterProject/frontend/src/assets/img/slider/slider_bg02.jpg")
-    center/cover no-repeat;
+  background: url("../../assets/img/slider/slider_bg02.jpg") center/cover
+    no-repeat;
 }
 .slide-3 {
-  background: url("F:/uni/smester 7/Web development/SmesterProject/frontend/src/assets/img/slider/slider_bg03.jpg")
-    center/cover no-repeat;
+  background: url("../../assets/img/slider/slider_bg01.jpg") center/cover
+    no-repeat;
 }
 
 /* Responsive adjustments */

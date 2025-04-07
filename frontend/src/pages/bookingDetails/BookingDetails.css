@@ -106,10 +106,175 @@
   font-size: 20px;
   margin-right: 10px;
 }
+.booking-details-area .primary-contact .title {
+  color: #fff;
+  margin-bottom: 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+.booking-details-wrap {
+  background: #fff;
+  padding: 50px 40px 80px;
+  border-radius: 0 0 5px 5px;
+}
+.booking-details-wrap .form-grp {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+}
+.booking-details-wrap .form-grp .icon {
+  font-size: 26px;
+  line-height: 0;
+  color: #5b1734;
+  margin-right: 12px;
+}
+.booking-details-wrap .form-grp .form {
+  flex-grow: 1;
+  position: relative;
+}
+.booking-details-wrap .form-grp .form label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #6a2e4d;
+  opacity: 0.8;
+  position: absolute;
+  left: 10px;
+  top: -10px;
+  background: #fff;
+  padding: 0 10px;
+  z-index: 2;
+}
+.booking-details-wrap .form-grp .form .form-select {
+  padding: 18px 60px 18px 20px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #6a2e4d;
+  vertical-align: middle;
+  background: url(../../assets/img/contentform/select_down_arrow02.png)
+    no-repeat scroll 97.5% center;
+  box-shadow: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  transition: 0.3s ease-in-out;
+  width: 100%;
+  font-family: "Barlow", sans-serif;
+  cursor: pointer;
+  border: 1px solid #e1e1e1;
+  background-color: transparent;
+  border-radius: 5px;
+}
+.booking-details-wrap ul {
+  display: flex;
+  align-items: center;
+  margin: 0 -6px;
+  flex-wrap: wrap;
+}
+.booking-details-wrap ul li:first-child {
+  width: 26%;
+}
+.booking-details-wrap ul li .form-grp .form .form-select {
+  padding: 18px 40px 18px 20px;
+}
+.booking-details-wrap ul li {
+  padding: 0 6px;
+  width: 37%;
+}
+.booking-details-wrap .form-grp input {
+  width: 100%;
+  background: transparent;
+  border: 1px solid #e1e1e1;
+  border-radius: 5px;
+  padding: 18px 20px;
+  font-size: 16px;
+  color: #6a2e4d;
+  font-weight: 500;
+  opacity: 80%;
+  font-family: "Barlow", sans-serif;
+}
+.booking-details-wrap .gender-select {
+  margin-left: 40px;
+  margin-bottom: 20px;
+}
+.booking-details-wrap .gender-select .title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #6a2e4d;
+  margin-bottom: 20px;
+}
+.booking-details-wrap .gender-select ul {
+  display: flex;
+  align-items: center;
+  margin: 0;
+}
+.booking-details-wrap .gender-select ul li.active {
+  border-color: #57112f;
+}
+.booking-details-wrap .gender-select ul li {
+  font-size: 16px;
+  font-weight: 500;
+  color: #57112f;
+  width: auto !important;
+  font-family: "Barlow", sans-serif;
+  border: 1px solid #e1e1e1;
+  border-radius: 4px;
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  min-width: 142px;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+.booking-details-wrap .gender-select ul li i {
+  line-height: 0;
+  font-size: 23px;
+  margin-right: 12px;
+}
+.booking-details-wrap .gender-select ul li:last-child {
+  margin-right: 0;
+}
 /* Responsive code  */
 @media (max-width: 1199.98px) {
   .booking-details-area .row .col-73 {
     width: 100%;
     flex: 0 0 100%;
+  }
+}
+@media (max-width: 767.98px) {
+  .booking-details-area .primary-contact {
+    padding: 12px 20px;
+    border-radius: 5px 5px 0 0;
+  }
+}
+@media (max-width: 767.98px) {
+  .booking-details-wrap {
+    padding: 35px 20px 45px;
+  }
+}
+@media (max-width: 991.98px) {
+  .booking-details-wrap {
+    padding: 40px 30px 60px;
+  }
+}
+@media (max-width: 767.98px) {
+  .booking-details-wrap .form-grp .icon {
+    font-size: 18px;
+    margin-right: 8px;
+  }
+}
+@media (max-width: 767.98px) {
+  .booking-details-wrap ul li:first-child {
+    width: 100%;
+  }
+}
+@media (max-width: 767.98px) {
+  .booking-details-wrap ul li {
+    width: 100%;
+  }
+}
+@media (max-width: 767.98px) {
+  .booking-details-wrap .gender-select {
+    margin-left: 0px;
   }
 }

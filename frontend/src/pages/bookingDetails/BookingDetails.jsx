@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import SimpleHeader from "../../components/simpleHeader/SimpleHeader";
 import { useLocation } from "react-router-dom"; // Import useLocation hook
 import "./BookingDetails.css"; // Assuming you have a CSS file for styles
@@ -6,7 +6,11 @@ import "./BookingDetails.css"; // Assuming you have a CSS file for styles
 const BookingDetails = () => {
   const location = useLocation(); // Get the location object
   const imageSrc = location.state?.image; // Access the image passed from FlightDetails
+  const [selectedGender, setSelectedGender] = useState("male"); // Default or empty ""
 
+  const handleGenderClick = (gender) => {
+    setSelectedGender(gender);
+  };
   return (
     <div>
       <SimpleHeader />
@@ -70,7 +74,7 @@ const BookingDetails = () => {
                 <form action="#">
                   <div class="form-grp select-form">
                     <div class="icon">
-                      <i class="flaticon-add-user"></i>
+                      <i className="bi bi-person-plus"></i>
                     </div>
                     <div class="form">
                       <label for="shortBy">
@@ -94,7 +98,7 @@ const BookingDetails = () => {
                     <li>
                       <div class="form-grp">
                         <div class="icon">
-                          <i class="flaticon-user-1"></i>
+                          <i className="bi bi-person-fill"></i>
                         </div>
                         <div class="form">
                           <select
@@ -121,14 +125,20 @@ const BookingDetails = () => {
                       </div>
                     </li>
                   </ul>
-                  <div class="gender-select">
-                    <h2 class="title">Select Your Gender*</h2>
+                  <div className="gender-select">
+                    <h2 className="title">Select Your Gender*</h2>
                     <ul>
-                      <li class="active">
-                        <i class="flaticon-little-kid"></i> Male
+                      <li
+                        className={selectedGender === "male" ? "active" : ""}
+                        onClick={() => handleGenderClick("male")}
+                      >
+                        <i className="bi bi-gender-male"></i> Male
                       </li>
-                      <li>
-                        <i class="flaticon-little-girl"></i> Female
+                      <li
+                        className={selectedGender === "female" ? "active" : ""}
+                        onClick={() => handleGenderClick("female")}
+                      >
+                        <i className="bi bi-gender-female"></i> Female
                       </li>
                     </ul>
                   </div>
@@ -136,7 +146,7 @@ const BookingDetails = () => {
                     <div class="col-md-6">
                       <div class="form-grp">
                         <div class="icon">
-                          <i class="flaticon-globe-1"></i>
+                          <i class="bi bi-globe"></i>
                         </div>
                         <div class="form">
                           <label for="nationality">Nationality</label>
@@ -160,7 +170,7 @@ const BookingDetails = () => {
                     <div class="col-md-6">
                       <div class="form-grp">
                         <div class="icon">
-                          <i class="flaticon-telephone-call"></i>
+                          <i class="bi bi-telephone-outbound"></i>
                         </div>
                         <div class="form">
                           <input type="number" placeholder="Mobile Number *" />
@@ -170,7 +180,7 @@ const BookingDetails = () => {
                     <div class="col-md-6">
                       <div class="form-grp">
                         <div class="icon">
-                          <i class="flaticon-calendar"></i>
+                          <i class="bi bi-calendar3"></i>
                         </div>
                         <div class="form">
                           <label for="shortBy">Date of Birth</label>
@@ -185,7 +195,7 @@ const BookingDetails = () => {
                     <div class="col-md-6">
                       <div class="form-grp">
                         <div class="icon">
-                          <i class="flaticon-home"></i>
+                          <i class="bi bi-house"></i>
                         </div>
                         <div class="form">
                           <input type="text" placeholder="Post Code *" />
@@ -195,7 +205,7 @@ const BookingDetails = () => {
                     <div class="col-md-6">
                       <div class="form-grp">
                         <div class="icon">
-                          <i class="flaticon-arroba"></i>
+                          <i class="bi bi-envelope-at"></i>
                         </div>
                         <div class="form">
                           <label for="email">Your Email</label>
@@ -210,7 +220,7 @@ const BookingDetails = () => {
                     <div class="col-md-6">
                       <div class="form-grp">
                         <div class="icon">
-                          <i class="flaticon-five-stars"></i>
+                          <i class="bi bi-star-fill text-warning"></i>
                         </div>
                         <div class="form">
                           <input

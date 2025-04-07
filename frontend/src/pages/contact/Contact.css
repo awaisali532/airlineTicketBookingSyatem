@@ -8,13 +8,11 @@ body {
 
 .contact-card {
   width: 60%;
-  max-width: 800px;
   padding: 2rem;
   background: white;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   margin: 0 auto;
-  min-height: 500px; /* Ensure card has a proper minimum height */
 }
 
 /* Enable scrolling on the entire page only on mobile screens */

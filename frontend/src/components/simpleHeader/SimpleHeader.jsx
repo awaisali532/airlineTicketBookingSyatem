@@ -42,9 +42,11 @@ const SimpleHeader = () => {
     >
       <div className="container h-100">
         <div className="row align-items-center h-100 mx-0">
-          <div className="col-12 text-white text-right">
+          <div className="col-12 text-white text-center">
             <div className="header-content">
-              <h1 className="display-3 fw-bold mb-0">{currentContent.title}</h1>
+              <h1 className="display-3 fw-bold mb-0 ">
+                {currentContent.title}
+              </h1>
             </div>
           </div>
         </div>

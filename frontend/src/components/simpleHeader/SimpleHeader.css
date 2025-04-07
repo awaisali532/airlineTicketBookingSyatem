@@ -1,9 +1,8 @@
 .simple-header-area {
   position: relative;
-  height: 20vh; /* Full screen height */
+  padding: 45px 0 50px;
   background-size: cover;
   background-position: center;
-
   background-color: #003580; /* Fallback background color */
   transition: background-image 0.5s ease-in-out; /* Smooth transition */
 }

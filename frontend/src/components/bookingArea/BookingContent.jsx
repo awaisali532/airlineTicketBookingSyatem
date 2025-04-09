@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./BookingContent.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { Link, useNavigate } from "react-router-dom"; // 🟡 Changed here
+import { useNavigate } from "react-router-dom"; // 🟡 Added for navigation
 
 const Bookingcontent = () => {
   const [from, setFrom] = useState("");
@@ -12,10 +12,56 @@ const Bookingcontent = () => {
   const [endDate, setEndDate] = useState(new Date());
   const [passenger, setPassenger] = useState("");
   const [promoCode, setPromoCode] = useState("");
+  const [suggestions, setSuggestions] = useState([]); // To store suggestions
+  const [activeField, setActiveField] = useState(""); // Track the active field
 
   const navigate = useNavigate(); // 🟡 Added for navigation
 
-  // 🟡 Function to check if all fields are filled
+  const handleFromChange = (e) => {
+    const value = e.target.value;
+    setFrom(value);
+    setActiveField("from"); // Mark 'from' as active field
+
+    if (value.trim()) {
+      // Fetch suggestions based on the 'from' input
+      setSuggestions([
+        "New York",
+        "Dubai",
+        "London",
+        "Los Angeles",
+        "Doha",
+        "Chicago",
+      ]);
+    } else {
+      setSuggestions([]);
+    }
+  };
+
+  const handleToChange = (e) => {
+    const value = e.target.value;
+    setTo(value);
+    setActiveField("to"); // Mark 'to' as active field
+
+    if (value.trim()) {
+      // Fetch suggestions based on the 'to' input
+      setSuggestions(["New York", "Los Angeles", "Chicago", "San Francisco"]);
+    } else {
+      setSuggestions([]);
+    }
+  };
+
+  const handleSelect = (value, field) => {
+    if (field === "from") {
+      setFrom(value);
+    } else if (field === "to") {
+      setTo(value);
+    }
+
+    // Clear suggestions and close the suggestion box
+    setSuggestions([]);
+    setActiveField(""); // Reset active field after selection
+  };
+
   const isFormValid = () => {
     return (
       from.trim() &&
@@ -47,9 +93,8 @@ const Bookingcontent = () => {
 
     console.log("Form Submitted:", bookingData);
 
-    // TODO: Send to backend via fetch/axios
-
-    navigate("/flightdetails"); // 🟡 Navigate only if form is valid
+    // 🟡 Use navigate to pass the booking data to flightdetails page
+    navigate("/flightdetails", { state: { bookingData } }); // Pass data using state
   };
 
   const handleExchange = () => {
@@ -72,11 +117,22 @@ const Bookingcontent = () => {
                 name="from"
                 placeholder="City or Airport"
                 value={from}
-                onChange={(e) => setFrom(e.target.value)}
+                onChange={handleFromChange}
               />
+              {activeField === "from" && suggestions.length > 0 && (
+                <ul className="suggestions-list">
+                  {suggestions.map((suggestion, index) => (
+                    <li
+                      key={index}
+                      onClick={() => handleSelect(suggestion, "from")}
+                    >
+                      {suggestion}
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
           </div>
-
           {/* To with exchange icon */}
           <div className="col position-relative">
             <div className="form-grp">
@@ -87,10 +143,22 @@ const Bookingcontent = () => {
                 name="to"
                 placeholder="City or Airport"
                 value={to}
-                onChange={(e) => setTo(e.target.value)}
+                onChange={handleToChange}
                 className="position-relative"
                 style={{ zIndex: 1 }}
               />
+              {activeField === "to" && suggestions.length > 0 && (
+                <ul className="suggestions-list">
+                  {suggestions.map((suggestion, index) => (
+                    <li
+                      key={index}
+                      onClick={() => handleSelect(suggestion, "to")}
+                    >
+                      {suggestion}
+                    </li>
+                  ))}
+                </ul>
+              )}
               <button
                 type="button"
                 className="exchange-icon"
@@ -101,7 +169,6 @@ const Bookingcontent = () => {
               </button>
             </div>
           </div>
-
           {/* Trip Type */}
           <div className="col">
             <div className="form-grp">
@@ -109,7 +176,7 @@ const Bookingcontent = () => {
               <select
                 id="trip"
                 name="trip"
-                className="w-100 bg-transparent border-0"
+                className="w-100 bg-transparent "
                 value={trip}
                 onChange={(e) => setTrip(e.target.value)}
               >
@@ -121,7 +188,6 @@ const Bookingcontent = () => {
               </select>
             </div>
           </div>
-
           {/* Depart Date */}
           <div className="col">
             <div className="form-grp">
@@ -135,7 +201,6 @@ const Bookingcontent = () => {
               />
             </div>
           </div>
-
           {/* Return Date */}
           <div className="col">
             <div className="form-grp">
@@ -150,8 +215,7 @@ const Bookingcontent = () => {
               />
             </div>
           </div>
-
-          {/* 🟡 Passenger/Class Dropdown */}
+          {/* Passengers */}
           <div className="col">
             <div className="form-grp">
               <label htmlFor="passenger">Passenger/Class</label>
@@ -178,13 +242,13 @@ const Bookingcontent = () => {
           </div>
         </div>
 
-        {/* 🟡 Submit Button moved inside form for full control */}
+        {/* Submit Button */}
         <div className="booking-footer mt-3 d-flex justify-content-end align-items-center">
           <a href="booking-details.html" className="promo-code">
             + Add Promo code
           </a>
 
-          {/* 🟡 Submit button disabled until form is valid */}
+          {/* Submit button */}
           <button
             type="submit"
             className="custom_btn"

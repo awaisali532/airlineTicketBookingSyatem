@@ -31,6 +31,7 @@ const Bookingcontent = () => {
         "Los Angeles",
         "Doha",
         "Chicago",
+        "Dubai",
       ]);
     } else {
       setSuggestions([]);
@@ -44,7 +45,13 @@ const Bookingcontent = () => {
 
     if (value.trim()) {
       // Fetch suggestions based on the 'to' input
-      setSuggestions(["New York", "Los Angeles", "Chicago", "San Francisco"]);
+      setSuggestions([
+        "New York",
+        "Los Angeles",
+        "Chicago",
+        "San Francisco",
+        "Dubai",
+      ]);
     } else {
       setSuggestions([]);
     }

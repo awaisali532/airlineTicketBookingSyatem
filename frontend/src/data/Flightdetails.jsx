@@ -22,7 +22,7 @@ const flightData = [
     airline: "Emirates",
     departureCity: "London",
     arrivalCity: "Dubai",
-    departureTime: "2025-01-10 16:30",
+    departureTime: "2025-04-11 16:30",
     arrivalTime: "2025-01-11 23:50",
     duration: "7h 20m",
     stops: 0,

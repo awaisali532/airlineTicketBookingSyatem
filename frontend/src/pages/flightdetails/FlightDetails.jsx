@@ -40,7 +40,8 @@ const FlightDetails = () => {
   const handleClick = (id) => {
     const flight = filteredFlights.find((flight) => flight.id === id);
     if (flight) {
-      navigate("/booking-details", { state: { flight } });
+      // Navigate to the Passenger Count Page with the selected flight data
+      navigate("/passenger-count", { state: { flight } });
     }
   };
 
@@ -82,7 +83,7 @@ const FlightDetails = () => {
                     <li>
                       {flight.duration} <span>{flight.stops} Stops</span>
                     </li>
-                    <li>
+                    <li className="d-flex align-items-center">
                       <span className="departure">{flight.departureCity}</span>
                       <FaPlaneDeparture className="plane-icon" />
                       <span className="arrival">{flight.arrivalCity}</span>
@@ -91,7 +92,7 @@ const FlightDetails = () => {
                 </div>
 
                 <div className="flight-price">
-                  <h4 className="title">US$ {flight.price.toFixed(2)}</h4>
+                  <h4 className="title">US$ {flight.price.adult.toFixed(2)}</h4>
                   <button
                     onClick={() => handleClick(flight.id)}
                     className="btn custom_btn"

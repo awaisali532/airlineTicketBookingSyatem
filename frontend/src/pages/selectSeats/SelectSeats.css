@@ -1,0 +1,146 @@
+/* General container styling */
+.seat-selection-container {
+  font-family: "Arial", sans-serif;
+  background-color: #f4f8fb;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 2rem auto;
+}
+
+.header-box {
+  background-color: var(--secondary-color);
+  color: var(--white-color);
+  padding: 1.5rem;
+  border-radius: 10px;
+  text-align: center;
+  transition: var(--transition);
+  margin-top: 20px;
+}
+
+/* Title and Airline name */
+.flight-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+}
+
+.flight-airline {
+  font-size: 18px;
+  color: #666;
+  font-weight: 600;
+}
+
+/* Seat class selection buttons */
+.seat-class-buttons {
+  margin-bottom: 20px;
+  margin-right: 10px;
+}
+
+.class-btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+}
+
+.class-btn.active {
+  background-color: #0056b3;
+  color: white;
+  border: none;
+  transform: scale(1.1);
+}
+
+.economy-btn {
+  background-color: #007bff;
+  color: white;
+}
+
+.business-btn {
+  background-color: #28a745;
+  color: white;
+}
+
+.first-btn {
+  background-color: #ffc107;
+  color: white;
+}
+
+/* Seat grid container */
+.seat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* Individual seat styling */
+.seat-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 6px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.seat-item:hover {
+  transform: scale(1.1);
+}
+
+.seat-item.available {
+  background-color: #4caf50;
+  color: white;
+}
+
+.seat-item.unavailable {
+  background-color: #9e9e9e;
+  color: white;
+}
+
+.seat-item:active {
+  transform: scale(1);
+}
+
+.seat-item.available:hover {
+  background-color: #45a049;
+  cursor: pointer;
+}
+
+.seat-item.unavailable:hover {
+  cursor: not-allowed;
+}
+
+.seat {
+  display: inline-block;
+  margin: 5px;
+  padding: 15px;
+  cursor: pointer;
+  text-align: center;
+}
+
+/* Selected seat styling */
+.selected {
+  border: 3px solid #007bff; /* Blue border around selected seats */
+  background-color: #d1e7fd; /* Light blue background for selected seat */
+}
+
+/* Button to proceed to the next page */
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+  padding: 12px 30px;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #004085;
+}
+
+/* Additional spacing for the container */
+.seat-selection-container {
+  margin-top: 30px;
+}

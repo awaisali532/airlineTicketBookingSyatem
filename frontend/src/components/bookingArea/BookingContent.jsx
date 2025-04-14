@@ -70,14 +70,7 @@ const Bookingcontent = () => {
   };
 
   const isFormValid = () => {
-    return (
-      from.trim() &&
-      to.trim() &&
-      trip &&
-      startDate &&
-      endDate &&
-      passenger.trim()
-    );
+    return from.trim() && to.trim() && trip && startDate && endDate;
   };
 
   const handleSubmit = (e) => {
@@ -94,7 +87,6 @@ const Bookingcontent = () => {
       trip,
       startDate,
       endDate,
-      passenger,
       promoCode,
     };
 
@@ -220,31 +212,6 @@ const Bookingcontent = () => {
                 className="w-100 bg-transparent"
                 dateFormat="MM/dd/yyyy"
               />
-            </div>
-          </div>
-          {/* Passengers */}
-          <div className="col">
-            <div className="form-grp">
-              <label htmlFor="passenger">Passenger/Class</label>
-              <select
-                id="passenger"
-                name="passenger"
-                className="w-100 bg-transparent border-0"
-                value={passenger}
-                onChange={(e) => setPassenger(e.target.value)}
-              >
-                <option value="">Select Option</option>
-                <option value="1 Passenger, Economy">
-                  1 Passenger, Economy
-                </option>
-                <option value="1 Passenger, Premium Economy">
-                  1 Passenger, Premium Economy
-                </option>
-                <option value="1 Passenger, Business">
-                  1 Passenger, Business
-                </option>
-                <option value="1 Passenger, First">1 Passenger, First</option>
-              </select>
             </div>
           </div>
         </div>

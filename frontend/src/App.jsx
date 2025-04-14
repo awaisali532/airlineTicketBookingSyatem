@@ -14,6 +14,8 @@ import Header from "./components/header/Header";
 import Login from "./pages/login/Login";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import BookingDetails from "./pages/bookingDetails/BookingDetails";
+import PassengersCount from "./pages/passengersCount/PassengersCount.jsx";
+import SelectSeats from "./pages/selectSeats/SelectSeats.jsx";
 const App = () => {
   return (
     <div>
@@ -27,6 +29,8 @@ const App = () => {
         <Route path="/flightdetails" element={<FlightDetails />} />
         <Route path="/booking-details" element={<BookingDetails />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/passenger-count" element={<PassengersCount />} />
+        <Route path="/select-seats" element={<SelectSeats />} />
       </Routes>
     </div>
   );

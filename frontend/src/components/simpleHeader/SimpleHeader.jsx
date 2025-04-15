@@ -5,7 +5,7 @@ import bgImage from "../../assets/img/simpleHeader/bg.png";
 import bg2 from "../../assets/img/simpleHeader/about.webp";
 import bg4 from "../../assets/img/simpleHeader/contact1.avif";
 import bg3 from "../../assets/img/slider/slider_bg03.jpg";
-
+import bg5 from "../../assets/img/simpleHeader/forget.jpeg";
 const SimpleHeader = () => {
   const location = useLocation();
 
@@ -26,10 +26,21 @@ const SimpleHeader = () => {
       title: "Booking Details",
       image: `url(${bg3})`,
     },
+    "/forget-password": {
+      title: "Forgot Your Password?",
+      description: "Enter your email to receive a reset link ",
+      image: `url(${bg5})`,
+    },
+    "/new-password": {
+      title: "Verify Your OTP",
+      description: "Enter your  New Password ",
+      image: `url(${bg5})`,
+    },
   };
 
   const currentContent = pageContent[location.pathname] || {
     title: "Welcome",
+    description: " ",
     image: `url(${bgImage})`,
   };
 
@@ -47,6 +58,7 @@ const SimpleHeader = () => {
               <h1 className="display-3 fw-bold mb-0 ">
                 {currentContent.title}
               </h1>
+              <p>{currentContent.description}</p>
             </div>
           </div>
         </div>

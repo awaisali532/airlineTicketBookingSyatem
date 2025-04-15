@@ -16,6 +16,8 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import BookingDetails from "./pages/bookingDetails/BookingDetails";
 import PassengersCount from "./pages/passengersCount/PassengersCount.jsx";
 import SelectSeats from "./pages/selectSeats/SelectSeats.jsx";
+import Forget from "./pages/login/Forget.jsx";
+import NewPassword from "./pages/login/NewPassword.jsx";
 const App = () => {
   return (
     <div>
@@ -29,6 +31,8 @@ const App = () => {
         <Route path="/flightdetails" element={<FlightDetails />} />
         <Route path="/booking-details" element={<BookingDetails />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/forget-password" element={<Forget />} />
+        <Route path="/new-password" element={<NewPassword />} />
         <Route path="/passenger-count" element={<PassengersCount />} />
         <Route path="/select-seats" element={<SelectSeats />} />
       </Routes>

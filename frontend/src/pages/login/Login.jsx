@@ -3,7 +3,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
 import "./Login.css";
 import SimpleHeader from "../../components/simpleHeader/SimpleHeader";
-
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({
@@ -90,9 +89,12 @@ const Login = () => {
             </div>
 
             <div className="d-flex justify-content-between mb-3">
-              <a href="#" className="text-decoration-none small">
+              <Link
+                to={"/forget-password"}
+                className="text-decoration-none small"
+              >
                 Forgot password?
-              </a>
+              </Link>
               <span className="small">
                 {isLogin ? (
                   <span>

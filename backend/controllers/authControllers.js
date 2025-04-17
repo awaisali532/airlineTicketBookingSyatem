@@ -2,6 +2,8 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import userModel from "../models/userModel.js";
 import transporter from "../config/nodmailer.js";
+import "dotenv/config";
+
 //register user
 export const registerUser = async (req, res) => {
   const { name, email, password } = req.body;
@@ -34,7 +36,7 @@ export const registerUser = async (req, res) => {
       sameSite: process.env.NODE_ENV === "production" ? "None" : "strict",
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
-    res.status(200).json({ message: "Registration successful" });
+    res.status(200).json({ success: true, message: "Registration successful" });
   } catch (error) {
     console.error("Error registering user:", error.message);
     return res.status(500).json({ message: "Internal server error" });
@@ -65,8 +67,9 @@ export const loginUser = async (req, res) => {
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
 
-    res.status(200).json({ message: "Login successful" });
+    res.status(200).json({ success: true, message: "Login successful" });
   } catch (error) {
+    console.error("Login error:", error);
     return res.status(500).json({ message: error.message });
   }
 };

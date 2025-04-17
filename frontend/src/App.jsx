@@ -18,9 +18,13 @@ import PassengersCount from "./pages/passengersCount/PassengersCount.jsx";
 import SelectSeats from "./pages/selectSeats/SelectSeats.jsx";
 import Forget from "./pages/login/Forget.jsx";
 import NewPassword from "./pages/login/NewPassword.jsx";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
+
 const App = () => {
   return (
     <div>
+      <ToastContainer />
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />

@@ -1,0 +1,220 @@
+.suggestions-list {
+  position: absolute;
+  background-color: white;
+  border: 1px solid #ccc;
+  list-style: none;
+  padding: 0;
+  margin-top: 5px;
+  width: 100%;
+  z-index: 10;
+  border-radius: 10px;
+}
+
+.suggestions-list li {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.suggestions-list li:hover {
+  background-color: #f0f0f0;
+}
+
+/* Horizontal Form Styles */
+.booking-form-horizontal {
+  background: #f8f3e7;
+  border: 1px solid #ebebeb;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+/* Remove borders from all input fields */
+.booking-form-horizontal .form-grp input,
+.booking-form-horizontal .form-grp select {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Remove focus/hover states too if needed */
+.booking-form-horizontal .form-grp input:focus,
+.booking-form-horizontal .form-grp select:focus {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+.booking-form-horizontal .form-grp {
+  position: relative;
+  border-right: 1px solid #dedcd7;
+  padding: 15px 20px;
+  height: 100%;
+}
+
+.booking-form-horizontal .form-grp.no-border {
+  border-right: none;
+}
+
+.booking-form-horizontal .form-grp label {
+  color: #8d5f77;
+  font-size: 12px;
+  font-weight: 500;
+  display: block;
+  margin-bottom: 5px;
+  font-family: "Barlow", sans-serif;
+}
+
+.booking-form-horizontal .form-grp input,
+.booking-form-horizontal .form-grp select {
+  background: transparent;
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+  color: #6a2e4d;
+  width: 100%;
+  font-family: "Barlow", sans-serif;
+  padding: 0;
+}
+
+/* Exchange Icon */
+.booking-form-horizontal .form-grp .exchange-icon {
+  position: absolute;
+  left: -48px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 35px;
+  height: 35px;
+  background: #fefdfb;
+  border-radius: 50%;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #622243;
+  border: 1px solid #eeedeb;
+  z-index: 2;
+  transition: all 0.3s ease;
+}
+
+.booking-form-horizontal .form-grp .exchange-icon:hover {
+  background: #622243;
+  color: #fff;
+  border-color: #622243;
+}
+
+/* Form Footer Styles */
+.booking-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 15px 0;
+}
+
+.promo-code {
+  color: #945274;
+  font-size: 16px;
+  font-weight: 500;
+  margin-right: 25px;
+  text-decoration: none;
+  font-family: "Barlow", sans-serif;
+}
+.tab-content-wrap .content-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.promo-code:hover {
+  color: #ffa903;
+}
+
+/* Date Picker Customization */
+.react-datepicker-wrapper {
+  width: 100%;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+  .booking-form-horizontal .form-grp {
+    padding: 12px 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .booking-form-horizontal .row {
+    flex-wrap: wrap;
+    position: relative;
+  }
+
+  .booking-form-horizontal .col {
+    flex: 0 0 50%;
+    max-width: 50%;
+    padding: 10px 15px;
+  }
+
+  .booking-form-horizontal .form-grp {
+    border-right: none;
+    border-bottom: 1px solid #dedcd7;
+    padding: 15px 0;
+  }
+
+  /* Exchange Icon - Mobile Position */
+  .booking-form-horizontal .col:nth-child(2) {
+    position: relative;
+    padding-top: 25px;
+  }
+
+  .booking-form-horizontal .form-grp .exchange-icon {
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%) translateY(-50%);
+    bottom: auto;
+  }
+
+  .booking-form-horizontal .form-grp:last-child,
+  .booking-form-horizontal .col:nth-child(odd) .form-grp {
+    border-bottom: none;
+  }
+
+  /* Footer adjustments */
+  .booking-footer {
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .promo-code {
+    margin-right: 0;
+    margin-bottom: 15px;
+  }
+}
+
+@media (max-width: 576px) {
+  .booking-form-horizontal .col {
+    flex: 0 0 100%;
+    max-width: 100%;
+    padding: 10px 20px;
+  }
+
+  .booking-form-horizontal .form-grp {
+    border-bottom: 1px solid #dedcd7;
+    padding: 15px 0;
+  }
+
+  .booking-form-horizontal .col:last-child .form-grp {
+    border-bottom: none;
+  }
+
+  /* Adjust icon position for single column */
+  .booking-form-horizontal .col:nth-child(2) {
+    padding-top: 25px;
+  }
+
+  /* Footer adjustments */
+  .booking-footer {
+    align-items: stretch;
+  }
+
+  .show-flights-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

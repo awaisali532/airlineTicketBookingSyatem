@@ -1,0 +1,17 @@
+.passenger-summary {
+  border-radius: 16px;
+  background: #f9f9f9;
+  transition: all 0.3s ease;
+}
+
+.passenger-summary:hover {
+  background: #f0f0f0;
+}
+.header-box {
+  background-color: var(--secondary-color);
+  color: var(--white-color);
+  padding: 1.5rem;
+  border-radius: 10px;
+  text-align: center;
+  transition: var(--transition);
+}

@@ -1,0 +1,101 @@
+/* Custom styles that can't be replaced with Bootstrap */
+.slider-area {
+  position: relative;
+  width: 100%;
+  height: 50vh;
+  /* overflow: hidden; */
+}
+
+.single-slider {
+  position: relative;
+  height: 50vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: left;
+  z-index: 2;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 53, 128, 0.7);
+  z-index: 1;
+}
+
+.slider-content {
+  position: relative;
+  z-index: 3;
+  color: white;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.animate {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* .slide-1 {
+  background: url("F:/uni/smester 7/Web development/SmesterProject/frontend/src/assets/img/slider/slider_bg01.jpg")
+    center/cover no-repeat;
+} */
+.slide-1 {
+  background: url("../../assets/img/slider/slider_bg01.jpg") center/cover
+    no-repeat;
+}
+.slide-2 {
+  background: url("../../assets/img/slider/slider_bg02.jpg") center/cover
+    no-repeat;
+}
+.slide-3 {
+  background: url("../../assets/img/slider/slider_bg01.jpg") center/cover
+    no-repeat;
+}
+
+/* Responsive adjustments */
+
+/* Add these new styles at the bottom of your existing CSS */
+@media (max-width: 767.98px) {
+  .slider-area,
+  .single-slider {
+    height: 70vh; /* Increased height for mobile */
+  }
+
+  .slider-content {
+    padding: 0 15px; /* Add side padding */
+    text-align: center; /* Center align on mobile */
+  }
+
+  .slider-content h2 {
+    font-size: 1.8rem !important; /* Adjusted heading size */
+    line-height: 1.3;
+    margin-bottom: 15px !important;
+  }
+
+  .slider-content p {
+    font-size: 1rem !important;
+    margin-bottom: 20px !important;
+  }
+
+  .single-slider {
+    background-position: center center !important; /* Ensure background is centered */
+  }
+
+  .container {
+    padding: 0 15px; /* Remove extra container padding */
+  }
+}

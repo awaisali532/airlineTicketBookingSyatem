@@ -1,0 +1,38 @@
+/* Default styles (for desktop) */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  /* overflow: hidden;  */
+}
+
+.contact-card {
+  width: 60%;
+  padding: 2rem;
+  background: white;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  margin: 0 auto;
+}
+
+/* Enable scrolling on the entire page only on mobile screens */
+@media (max-width: 768px) {
+  html,
+  body {
+    height: 100%; /* Ensure the body takes full height */
+    overflow-y: scroll; /* Enable vertical scrolling on mobile */
+  }
+
+  .contact-card {
+    width: 90%;
+    margin-top: 20px; /* Add some space at the top */
+    margin-bottom: 20px; /* Add some space at the bottom */
+    min-height: auto; /* Remove min-height to fit smaller screens */
+    box-sizing: border-box; /* Ensure padding doesn’t break layout */
+  }
+
+  /* Adding padding to body for smaller screens to prevent text from getting cut off */
+  body {
+    padding-bottom: 20px;
+  }
+}

@@ -1,0 +1,64 @@
+/* Remove properties that can use Bootstrap classes */
+.booking-wrap .nav-tabs {
+  border-bottom: none;
+}
+
+.booking-wrap .nav-tabs .nav-item:first-child .nav-link {
+  border-radius: 20px 0 0 0;
+}
+
+.booking-wrap .nav-tabs .nav-item.show .nav-link,
+.booking-wrap .nav-tabs .nav-link.active {
+  color: #6a2e4d;
+  background-color: #fff;
+}
+.sign-in-prompt p {
+  color: #622243;
+}
+/* Mobile styles */
+@media (max-width: 767.98px) {
+  .booking-wrap .nav-tabs .nav-item {
+    width: 100%;
+    flex: 0 0 100%;
+    margin-bottom: 5px;
+  }
+
+  .booking-wrap .nav-tabs .nav-item:first-child .nav-link {
+    border-radius: 20px 20px 0 0;
+  }
+}
+
+/* Custom styles that need to remain */
+.booking-wrap .nav-tabs .nav-link {
+  background: #622243;
+  border: none;
+  color: #ffffff;
+  text-transform: uppercase;
+  border-radius: 0;
+  transition: 0.3s linear;
+  font-family: "Barlow", sans-serif;
+  font-size: 15px;
+}
+
+.booking-wrap .nav-tabs .nav-link i {
+  font-size: 20px;
+  margin-right: 10px;
+  line-height: 0;
+  margin-top: 4px;
+}
+/* Active tab styling */
+.booking-wrap .nav-tabs .nav-link.active {
+  position: relative;
+  border-bottom: 3px solid #6a2e4d !important;
+  border-radius: 20px 20px 0 0 !important;
+}
+
+/* Fix for right side radius */
+.booking-wrap .nav-tabs .nav-item:last-child .nav-link {
+  border-radius: 0 20px 0 0 !important;
+}
+
+/* Remove radius from middle tabs */
+.booking-wrap .nav-tabs .nav-item:not(:first-child):not(:last-child) .nav-link {
+  border-radius: 0 !important;
+}

@@ -1,0 +1,42 @@
+/* Main Login Page */
+
+/* Remove unwanted spacing */
+.simple-header-area + .login-page {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+/* Form Card Styling */
+
+/* Button Styling */
+button.btn-link {
+  font-size: 0.85rem;
+}
+
+/* Ensure no unnecessary scrolling on desktop */
+
+/* Make adjustments for mobile screens */
+@media (max-width: 768px) {
+  .login-page {
+    justify-content: flex-start; /* Moves the form up */
+    padding-bottom: 20px;
+  }
+
+  .card {
+    max-width: 90%; /* Adjust width for mobile */
+    max-height: 70vh; /* Reduce card height */
+    padding: 15px;
+  }
+
+  /* Reduce input & button sizes for mobile */
+  input,
+  button {
+    padding: 8px;
+    font-size: 14px;
+  }
+
+  button {
+    padding: 10px;
+    font-size: 14px;
+  }
+}

@@ -6,9 +6,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./Slider.css";
 import { Link } from "react-router-dom";
 import "../../App.css";
+import { useAuth } from "../../context/AuthContext"; // Access AuthContext
 
 const SliderComponent = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const { isLoggedIn } = useAuth(); // Get login status from AuthContext
 
   const settings = {
     dots: false,
@@ -64,12 +66,15 @@ const SliderComponent = () => {
                       {/* Added mx-3 for better mobile spacing */}
                       Get rewarded for your travels with instant savings.
                     </p>
-                    <Link
-                      to={"/login"}
-                      className="btn custom_btn btn-lg px-4  "
-                    >
-                      Sign In / Register
-                    </Link>
+                    {/* Conditionally render the button based on the login status */}
+                    {!isLoggedIn && (
+                      <Link
+                        to={"/login"}
+                        className="btn custom_btn btn-lg px-4"
+                      >
+                        Sign In / Register
+                      </Link>
+                    )}
                   </div>
                 </div>
               </div>

@@ -1,12 +1,31 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom"; // Hook to navigate after log out
 import "bootstrap/dist/css/bootstrap.min.css"; // Bootstrap import
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "./header.css"; // Component-specific CSS
 import "../../App.css"; // Global CSS
 import { Link } from "react-router-dom";
-// import Login from '../../pages/Login';
+import { useAuth } from "../../context/AuthContext"; // Access AuthContext
 
 const Header = () => {
+  const { isLoggedIn, logout } = useAuth(); // Access isLoggedIn and logout from context
+  const navigate = useNavigate(); // Hook to navigate after log out
+
+  useEffect(() => {
+    // Check if there's a token in localStorage to determine login status
+    const token = localStorage.getItem("token");
+    if (!token) {
+      // If no token, logout the user
+      logout();
+    }
+  }, [logout]);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token"); // Remove token from localStorage to log out
+    logout(); // Call logout to update the state in AuthContext
+    navigate("/"); // Redirect to homepage after log out
+  };
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container">
@@ -29,10 +48,10 @@ const Header = () => {
         </button>
 
         {/* Navbar Items */}
-        <div className="collapse navbar-collapse " id="navbarNav">
-          <ul className="navbar-nav ms-auto ">
+        <div className="collapse navbar-collapse" id="navbarNav">
+          <ul className="navbar-nav ms-auto">
             <li className="nav-item">
-              <Link className="nav-link " to={"/"}>
+              <Link className="nav-link" to={"/"}>
                 Home
               </Link>
             </li>
@@ -48,10 +67,16 @@ const Header = () => {
             </li>
           </ul>
 
-          {/* Sign-in Button */}
-          <Link to={"/login"} className="btn custom_btn ms-3 signin ">
-            Sign in
-          </Link>
+          {/* Conditionally Render "Sign in" or "Log out" Button */}
+          {isLoggedIn ? (
+            <button onClick={handleLogout} className="btn custom_btn ms-3">
+              Log out
+            </button>
+          ) : (
+            <Link to={"/login"} className="btn custom_btn ms-3 signin">
+              Sign in
+            </Link>
+          )}
         </div>
       </div>
     </nav>

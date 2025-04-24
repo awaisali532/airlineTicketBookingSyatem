@@ -7,8 +7,11 @@ import { UserContext } from "../../context/UserContext";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext"; // Import the useAuth hook
+
 const Login = () => {
-  const { backendUrl, isLogin, setIsLogin } = useContext(UserContext); // Fixed: included `isLogin`
+  const { backendUrl } = useContext(UserContext); // Use UserContext for backend URL
+  const { isLoggedIn, login, logout } = useAuth(); // Get login/logout and isLoggedIn from AuthContext
   const navigate = useNavigate();
   const validateForm = () => {
     // Simple email regex for validation
@@ -29,18 +32,20 @@ const Login = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      setIsLogin(true);
+      login(); // Call login function from AuthContext
     } else {
-      setIsLogin(false);
+      logout(); // Call logout function from AuthContext
     }
-  }, []);
+  }, [login, logout]); // Add login and logout to the dependency array
+  const [isSignUpMode, setIsSignUpMode] = useState(!isLoggedIn);
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleToggle = () => {
-    setIsLogin(!isLogin);
+    setIsSignUpMode(!isSignUpMode); // Toggle between Sign Up and Login
+
     setName(""); // Reset name field
     setEmail(""); // Reset email field
     setPassword(""); // Reset password field
@@ -57,7 +62,7 @@ const Login = () => {
     e.preventDefault();
     if (!validateForm()) return;
     try {
-      if (!isLogin) {
+      if (!isSignUpMode) {
         const { data } = await axios.post(
           backendUrl + "/api/auth/register",
           { name, email, password },
@@ -70,7 +75,7 @@ const Login = () => {
 
         if (data.success) {
           localStorage.setItem("token", data.token);
-          setIsLogin(true);
+          login(); // Call login function from AuthContext
           toast.success("Registration successful! You are now logged in.");
           navigate("/");
         } else {
@@ -89,7 +94,7 @@ const Login = () => {
 
         if (data.success) {
           localStorage.setItem("token", data.token);
-          setIsLogin(true);
+          login(); // Call login function from AuthContext
           toast.success("Login Successfuly");
           navigate("/contact");
         } else {
@@ -116,11 +121,11 @@ const Login = () => {
           style={{ maxWidth: "400px" }}
         >
           <h2 className="text-center fw-bold mb-4">
-            {isLogin ? "Login" : "Sign Up"}
+            {isSignUpMode ? "Login" : "Sign Up"}
           </h2>
           <form onSubmit={handleSubmit}>
             {/* Keep all your existing form fields exactly the same */}
-            {!isLogin && (
+            {!isSignUpMode && (
               <div className="mb-3">
                 <label className="form-label" htmlFor="name">
                   Name:
@@ -175,7 +180,7 @@ const Login = () => {
                 Forgot password?
               </Link>
               <span className="small">
-                {isLogin ? (
+                {isSignUpMode ? (
                   <span>
                     New user?{" "}
                     <button
@@ -205,7 +210,7 @@ const Login = () => {
               type="submit"
               className="btn hover-btn custom_btn w-100 mt-3"
             >
-              {isLogin ? "Login" : "Sign Up"}
+              {isSignUpMode ? "Login" : "Sign Up"}
             </button>
           </form>
         </div>

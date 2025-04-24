@@ -2,11 +2,16 @@ import mongoose from "mongoose";
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(`${process.env.MONGODB_URL}/airlineticket`);
-    console.log("MongoDB connected successfully");
+    const conn = await mongoose.connect(process.env.MONGODB_URL, {
+      dbName: "airlineticket", // clearly specifying DB name
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+
+    console.log(`✅ MongoDB connected: ${conn.connection.host}`);
   } catch (error) {
-    console.error("Error connecting to MongoDB:", error.message);
-    process.exit(1); // Exit the process if the connection fails
+    console.error("❌ MongoDB connection error:", error.message);
+    process.exit(1);
   }
 };
 

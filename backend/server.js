@@ -26,3 +26,32 @@ app.use("/api/user", userRouter); // Authentication routes
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
+import userModel from "./models/userModel.js";
+import bcrypt from "bcrypt";
+
+// ❗ One-time admin creation route (delete after use)
+app.get("/create-admin", async (req, res) => {
+  try {
+    const existingAdmin = await userModel.findOne({
+      email: "admin@example.com",
+    });
+    if (existingAdmin) {
+      return res.send("Admin already exists");
+    }
+
+    const hashedPassword = await bcrypt.hash("admin5321", 10);
+
+    const admin = new userModel({
+      name: "Admin",
+      email: "adminAwais@gmail.com",
+      password: hashedPassword,
+      role: "admin",
+    });
+
+    await admin.save();
+    res.send("✅ Admin created successfully");
+  } catch (err) {
+    res.status(500).send("❌ Error creating admin: " + err.message);
+  }
+});

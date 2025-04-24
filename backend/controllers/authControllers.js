@@ -23,6 +23,7 @@ export const registerUser = async (req, res) => {
       name,
       email,
       password: hashedPassword,
+      role: "user", // Default role is user
     });
     await newUser.save(); //STORE THE USER IN THE DATABASE
 
@@ -57,6 +58,7 @@ export const loginUser = async (req, res) => {
     if (!isMatch) {
       return res.status(400).json({ message: "Invalid Password" });
     }
+
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "7d",
     });
@@ -66,8 +68,11 @@ export const loginUser = async (req, res) => {
       sameSite: process.env.NODE_ENV === "production" ? "None" : "strict",
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
+    // ✨ Role-based message
+    let message =
+      user.role === "admin" ? "Logged in as Admin" : "Login successful";
 
-    res.status(200).json({ success: true, message: "Login successful" });
+    res.status(200).json({ success: true, message, role: user.role }); // You can also send role
   } catch (error) {
     console.error("Login error:", error);
     return res.status(500).json({ message: error.message });

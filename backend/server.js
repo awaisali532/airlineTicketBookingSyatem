@@ -10,7 +10,6 @@ const PORT = process.env.PORT || 4000;
 connectDB();
 console.log("Loaded JWT_SECRET:", process.env.JWT_SECRET);
 
-const allowedOrigins = ["http://localhost:5173"];
 app.use(express.json());
 app.use(cookieParser());
 app.use(

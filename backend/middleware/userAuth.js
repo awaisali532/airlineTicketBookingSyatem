@@ -30,35 +30,39 @@ import jwt from "jsonwebtoken";
 import "dotenv/config";
 
 const userAuth = async (req, res, next) => {
+  // Get the token from the cookies
   const { token } = req.cookies;
 
+  // Check if the token is missing
   if (!token) {
-    // Token is missing, return a 401 Unauthorized status
-    return res
-      .status(401)
-      .json({ success: false, message: "Please login first" });
+    return res.status(401).json({
+      success: false,
+      message: "Please login first. Token missing.",
+    });
   }
 
   try {
-    // Try to verify the token
+    // Verify the token
     const tokenDecode = jwt.verify(token, process.env.JWT_SECRET);
 
+    // If token is valid and contains an id, attach user info to request object
     if (tokenDecode.id) {
-      req.user = { id: tokenDecode.id, role: tokenDecode.role }; // Attach user ID to the request object
+      req.user = { id: tokenDecode.id, role: tokenDecode.role }; // Attach user id and role
       next(); // Proceed to the next middleware or route handler
     } else {
-      // If the token is invalid or does not contain the id
+      // Token is invalid or doesn't have an id
       return res.status(401).json({
         success: false,
-        message: "Not Authorized. Login Again",
+        message: "Not authorized. Please log in again.",
       });
     }
   } catch (error) {
-    // If there's an error during token verification (e.g., expired token)
-    console.error("Token verification error:", error); // Log error for debugging purposes
-    return res
-      .status(401)
-      .json({ success: false, message: "Invalid or expired token" });
+    // If the token verification fails (e.g., token expired, invalid token format)
+    console.error("Token verification error:", error); // Log error details for debugging
+    return res.status(401).json({
+      success: false,
+      message: "Invalid or expired token. Please log in again.",
+    });
   }
 };
 

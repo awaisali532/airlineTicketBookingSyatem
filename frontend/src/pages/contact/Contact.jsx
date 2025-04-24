@@ -4,7 +4,39 @@ import SimpleHeader from "../../components/simpleHeader/SimpleHeader";
 import "./Contact.css";
 
 const Contact = () => {
-  const userName = "John Doe";
+  const [userName, setUserName] = useState(null);
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          throw new Error("No token found");
+        }
+
+        const response = await fetch("http://localhost:4000/api/user/data", {
+          method: "GET",
+          credentials: "include",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const data = await response.json();
+
+        if (data.success) {
+          setUserName(data.userData.name); // Store the data directly (assuming response contains name, email, etc.)
+          console.log("User data fetched successfully:", data.userData.name);
+        } else {
+          console.error("Failed to fetch user data:", data.message);
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUser();
+  }, [backendUrl]);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -31,7 +63,7 @@ const Contact = () => {
       <section className="container py-4 d-flex justify-content-center">
         <div className="contact-card">
           <h2 className="text-center text-secondary-custom  fw-bold mb-3">
-            Welcome, {userName}!
+            Welcome, {userName || "Guest"}!
           </h2>
           <h3 className="text-center text-primary-custom fw-semibold mb-4">
             Contact Us

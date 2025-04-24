@@ -37,7 +37,9 @@ export const registerUser = async (req, res) => {
       sameSite: process.env.NODE_ENV === "production" ? "None" : "strict",
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
-    res.status(200).json({ success: true, message: "Registration successful" });
+    res
+      .status(200)
+      .json({ success: true, token, message: "Registration successful" });
   } catch (error) {
     console.error("Error registering user:", error.message);
     return res.status(500).json({ message: "Internal server error" });
@@ -72,7 +74,7 @@ export const loginUser = async (req, res) => {
     let message =
       user.role === "admin" ? "Logged in as Admin" : "Login successful";
 
-    res.status(200).json({ success: true, message, role: user.role }); // You can also send role
+    res.status(200).json({ success: true, token, message, role: user.role }); // You can also send role
   } catch (error) {
     console.error("Login error:", error);
     return res.status(500).json({ message: error.message });

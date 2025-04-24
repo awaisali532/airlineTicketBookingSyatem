@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
 import "./Login.css";
@@ -10,6 +10,30 @@ import { useNavigate } from "react-router-dom";
 const Login = () => {
   const { backendUrl, isLogin, setIsLogin } = useContext(UserContext); // Fixed: included `isLogin`
   const navigate = useNavigate();
+  const validateForm = () => {
+    // Simple email regex for validation
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(email)) {
+      toast.error("Please enter a valid email address.");
+      return false;
+    }
+
+    // Simple password strength check (minimum length)
+    if (password.length < 6) {
+      toast.error("Password should be at least 6 characters long.");
+      return false;
+    }
+
+    return true;
+  };
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsLogin(true);
+    } else {
+      setIsLogin(false);
+    }
+  }, []);
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -31,6 +55,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validateForm()) return;
     try {
       if (!isLogin) {
         const { data } = await axios.post(
@@ -44,7 +69,9 @@ const Login = () => {
         console.log("Registration response:", data);
 
         if (data.success) {
+          localStorage.setItem("token", data.token);
           setIsLogin(true);
+          toast.success("Registration successful! You are now logged in.");
           navigate("/");
         } else {
           toast.error(data.message);
@@ -61,8 +88,10 @@ const Login = () => {
         console.log("Login response data:", data);
 
         if (data.success) {
+          localStorage.setItem("token", data.token);
           setIsLogin(true);
-          navigate("/");
+          toast.success("Login Successfuly");
+          navigate("/contact");
         } else {
           toast.error(data.message);
         }

@@ -1,40 +1,37 @@
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom"; // Hook to navigate after log out
-import "bootstrap/dist/css/bootstrap.min.css"; // Bootstrap import
+import React, { useContext, useEffect } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
-import "./header.css"; // Component-specific CSS
-import "../../App.css"; // Global CSS
-import { Link } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext"; // Access AuthContext
+import "./header.css";
+import "../../App.css";
+import { UserContext } from "../../context/UserContext"; // Correct import
 
 const Header = () => {
-  const { isLoggedIn, logout } = useAuth(); // Access isLoggedIn and logout from context
-  const navigate = useNavigate(); // Hook to navigate after log out
+  const { isLogin, setIsLogin, setuserdata } = useContext(UserContext); // Correct destructuring
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Check if there's a token in localStorage to determine login status
     const token = localStorage.getItem("token");
     if (!token) {
-      // If no token, logout the user
-      logout();
+      setIsLogin(false);
+      setuserdata(null);
     }
-  }, [logout]);
+  }, [setIsLogin, setuserdata]);
 
   const handleLogout = () => {
-    localStorage.removeItem("token"); // Remove token from localStorage to log out
-    logout(); // Call logout to update the state in AuthContext
-    navigate("/"); // Redirect to homepage after log out
+    localStorage.removeItem("token");
+    setIsLogin(false);
+    setuserdata(null);
+    navigate("/");
   };
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container">
-        {/* Logo */}
         <Link className="navbar-brand logo" to="/">
           <img src="./logo_main.png" alt="Logo" width="100" />
         </Link>
 
-        {/* Responsive Toggle Button */}
         <button
           className="navbar-toggler"
           type="button"
@@ -47,7 +44,6 @@ const Header = () => {
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        {/* Navbar Items */}
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto">
             <li className="nav-item">
@@ -67,8 +63,8 @@ const Header = () => {
             </li>
           </ul>
 
-          {/* Conditionally Render "Sign in" or "Log out" Button */}
-          {isLoggedIn ? (
+          {/* Show login/logout depending on isLogin */}
+          {isLogin ? (
             <button onClick={handleLogout} className="btn custom_btn ms-3">
               Log out
             </button>

@@ -1,27 +1,34 @@
 import React, { useContext, useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Login.css";
 import SimpleHeader from "../../components/simpleHeader/SimpleHeader";
 import { UserContext } from "../../context/UserContext";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext"; // Import the useAuth hook
 
 const Login = () => {
-  const { backendUrl } = useContext(UserContext); // Use UserContext for backend URL
-  const { isLoggedIn, login, logout } = useAuth(); // Get login/logout and isLoggedIn from AuthContext
   const navigate = useNavigate();
+  const { backendUrl, isLogin, setIsLogin, setuserdata } =
+    useContext(UserContext);
+
+  const [isSignUpMode, setIsSignUpMode] = useState(true);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setIsLogin(!!token);
+  }, [setIsLogin]);
+
   const validateForm = () => {
-    // Simple email regex for validation
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailRegex.test(email)) {
       toast.error("Please enter a valid email address.");
       return false;
     }
 
-    // Simple password strength check (minimum length)
     if (password.length < 6) {
       toast.error("Password should be at least 6 characters long.");
       return false;
@@ -29,26 +36,12 @@ const Login = () => {
 
     return true;
   };
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      login(); // Call login function from AuthContext
-    } else {
-      logout(); // Call logout function from AuthContext
-    }
-  }, [login, logout]); // Add login and logout to the dependency array
-  const [isSignUpMode, setIsSignUpMode] = useState(!isLoggedIn);
-
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
 
   const handleToggle = () => {
-    setIsSignUpMode(!isSignUpMode); // Toggle between Sign Up and Login
-
-    setName(""); // Reset name field
-    setEmail(""); // Reset email field
-    setPassword(""); // Reset password field
+    setIsSignUpMode(!isSignUpMode);
+    setName("");
+    setEmail("");
+    setPassword("");
   };
 
   const handleChange = (e) => {
@@ -61,8 +54,10 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
+
     try {
       if (!isSignUpMode) {
+        // Registration
         const { data } = await axios.post(
           backendUrl + "/api/auth/register",
           { name, email, password },
@@ -71,17 +66,18 @@ const Login = () => {
             withCredentials: true,
           }
         );
-        console.log("Registration response:", data);
 
         if (data.success) {
           localStorage.setItem("token", data.token);
-          login(); // Call login function from AuthContext
+          setIsLogin(true);
+          setuserdata(data.user);
           toast.success("Registration successful! You are now logged in.");
           navigate("/");
         } else {
           toast.error(data.message);
         }
       } else {
+        // Login
         const { data } = await axios.post(
           backendUrl + "/api/auth/login",
           { email, password },
@@ -90,25 +86,30 @@ const Login = () => {
             withCredentials: true,
           }
         );
-        console.log("Login response data:", data);
 
         if (data.success) {
           localStorage.setItem("token", data.token);
-          login(); // Call login function from AuthContext
+          setIsLogin(true);
+          setuserdata({ role: data.role });
           toast.success("Login Successfuly");
-          navigate("/contact");
+
+          console.log("Login response:", data); // ← Check this in browser console
+
+          if (data.role === "admin") {
+            navigate("/admin-home");
+          } else {
+            navigate("/");
+          }
         } else {
           toast.error(data.message);
         }
       }
     } catch (error) {
       console.error(
-        "Login failed error:",
+        "Login/Register failed:",
         error.response?.data || error.message
       );
-      toast.error(
-        error.response?.data?.message || "Login failed. Please try again."
-      );
+      toast.error(error.response?.data?.message || "Something went wrong.");
     }
   };
 
@@ -124,7 +125,6 @@ const Login = () => {
             {isSignUpMode ? "Login" : "Sign Up"}
           </h2>
           <form onSubmit={handleSubmit}>
-            {/* Keep all your existing form fields exactly the same */}
             {!isSignUpMode && (
               <div className="mb-3">
                 <label className="form-label" htmlFor="name">

@@ -1,0 +1,95 @@
+// controllers/flightController.js
+import Flight from "../models/Flightmodel.js"; // ✅ Make sure file name matches exactly
+
+// Controller to add a new flight
+export const addFlight = async (req, res) => {
+  try {
+    const {
+      airline,
+      departureCity,
+      arrivalCity,
+      departureTime,
+      arrivalTime,
+      duration,
+      stops,
+      price,
+      logo,
+      fly,
+      arive,
+    } = req.body;
+
+    // ✅ Basic validation
+    if (
+      !airline ||
+      !departureCity ||
+      !arrivalCity ||
+      !departureTime ||
+      !arrivalTime ||
+      !duration ||
+      stops === undefined ||
+      !price ||
+      !price.adult ||
+      !logo
+    ) {
+      return res.status(400).json({ error: "Missing required flight fields" });
+    }
+
+    const flight = new Flight(req.body);
+    await flight.save();
+    res.status(201).json({ message: "Flight added successfully", flight });
+  } catch (err) {
+    res
+      .status(500)
+      .json({ error: "Failed to add flight", details: err.message });
+  }
+};
+
+// Update flight by ID
+export const updateFlight = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const updatedFlight = await Flight.findByIdAndUpdate(id, req.body, {
+      new: true, // return the updated document
+      runValidators: true, // ensure schema rules apply
+    });
+
+    if (!updatedFlight) {
+      return res.status(404).json({ error: "Flight not found" });
+    }
+
+    res.json({ message: "Flight updated successfully", flight: updatedFlight });
+  } catch (err) {
+    res
+      .status(500)
+      .json({ error: "Failed to update flight", details: err.message });
+  }
+};
+// Delete flight by ID
+export const deleteFlight = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const deleteFlight = await Flight.findByIdAndDelete(id);
+
+    if (!deleteFlight) {
+      return res.status(404).json({ error: "Flight not found" });
+    }
+
+    res.json({ message: "Flight Deleted successfully", flight: deleteFlight });
+  } catch (err) {
+    res
+      .status(500)
+      .json({ error: "Failed to Deleted flight", details: err.message });
+  }
+};
+
+// Controller to get all flights
+export const getFlights = async (req, res) => {
+  try {
+    const flights = await Flight.find();
+    res.json(flights);
+  } catch (err) {
+    res
+      .status(500)
+      .json({ error: "Failed to fetch flights", details: err.message });
+  }
+};

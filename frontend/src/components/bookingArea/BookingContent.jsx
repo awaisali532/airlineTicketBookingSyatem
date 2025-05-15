@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import "./BookingContent.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -10,51 +11,47 @@ const Bookingcontent = () => {
   const [trip, setTrip] = useState("");
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
-  const [passenger, setPassenger] = useState("");
-  const [promoCode, setPromoCode] = useState("");
   const [suggestions, setSuggestions] = useState([]); // To store suggestions
   const [activeField, setActiveField] = useState(""); // Track the active field
+  const [cityList, setCityList] = useState([]);
+
+  //Fetch data of cities from the backend
+  const BASE_URL = import.meta.env.VITE_BACKEND_URL;
+  useEffect(() => {
+    const fetchCities = async () => {
+      try {
+        const res = await axios.get(`${BASE_URL}/api/flight/cities`); // Fetch available cities
+        setCityList(res.data); // set available cities
+      } catch (err) {
+        console.error("Failed to load cities:", err);
+      }
+    };
+
+    fetchCities();
+  }, []);
 
   const navigate = useNavigate(); // 🟡 Added for navigation
 
   const handleFromChange = (e) => {
     const value = e.target.value;
     setFrom(value);
-    setActiveField("from"); // Mark 'from' as active field
+    setActiveField("from");
 
-    if (value.trim()) {
-      // Fetch suggestions based on the 'from' input
-      setSuggestions([
-        "New York",
-        "Dubai",
-        "London",
-        "Los Angeles",
-        "Doha",
-        "Chicago",
-        "Dubai",
-      ]);
-    } else {
-      setSuggestions([]);
-    }
+    const filtered = cityList.filter((city) =>
+      city.toLowerCase().startsWith(value.toLowerCase())
+    );
+    setSuggestions(filtered);
   };
 
   const handleToChange = (e) => {
     const value = e.target.value;
     setTo(value);
-    setActiveField("to"); // Mark 'to' as active field
+    setActiveField("to");
 
-    if (value.trim()) {
-      // Fetch suggestions based on the 'to' input
-      setSuggestions([
-        "New York",
-        "Los Angeles",
-        "Chicago",
-        "San Francisco",
-        "Dubai",
-      ]);
-    } else {
-      setSuggestions([]);
-    }
+    const filtered = cityList.filter((city) =>
+      city.toLowerCase().startsWith(value.toLowerCase())
+    );
+    setSuggestions(filtered);
   };
 
   const handleSelect = (value, field) => {
@@ -87,7 +84,7 @@ const Bookingcontent = () => {
       trip,
       startDate,
       endDate,
-      promoCode,
+      // promoCode,
     };
 
     console.log("Form Submitted:", bookingData);
@@ -197,10 +194,11 @@ const Bookingcontent = () => {
                 onChange={(date) => setStartDate(date)}
                 className="w-100 bg-transparent"
                 dateFormat="MM/dd/yyyy"
+                minDate={new Date()} // restrict to today or future
               />
             </div>
           </div>
-          {/* Return Date */}
+          {/* Return Date
           <div className="col">
             <div className="form-grp">
               <label htmlFor="return">Return</label>
@@ -213,12 +211,12 @@ const Bookingcontent = () => {
                 dateFormat="MM/dd/yyyy"
               />
             </div>
-          </div>
+          </div> */}
         </div>
 
         {/* Submit Button */}
         <div className="booking-footer mt-3 d-flex justify-content-end align-items-center">
-          <a href="booking-details.html" className="promo-code">
+          <a href="#" className="promo-code">
             + Add Promo code
           </a>
 

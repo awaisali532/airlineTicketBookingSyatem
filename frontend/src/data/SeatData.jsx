@@ -38,7 +38,7 @@ const seatData = {
     { seatNumber: "5B", class: "business", isAvailable: true },
   ],
 
-  "British Airways": [
+  "SkyJet Airways": [
     { seatNumber: "1A", class: "economy", isAvailable: true },
     { seatNumber: "1B", class: "business", isAvailable: true },
     { seatNumber: "2A", class: "economy", isAvailable: true },

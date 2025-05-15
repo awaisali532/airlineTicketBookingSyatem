@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import flightData from "../../data/Flightdetails"; // Import the flight data
 import "./FlightDetails.css";
 import { FaPlaneDeparture } from "react-icons/fa";
+import axios from "axios";
 
 const FlightDetails = () => {
   const navigate = useNavigate();
@@ -11,10 +11,19 @@ const FlightDetails = () => {
 
   const [flights, setFlights] = useState([]);
   const [filteredFlights, setFilteredFlights] = useState([]);
-
   useEffect(() => {
-    // Set the flight data from the imported JSON
-    setFlights(flightData);
+    const BASE_URL = import.meta.env.VITE_BACKEND_URL;
+    // Fetch flight data from backend
+    const fetchFlights = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/api/flight`); // Replace with your backend endpoint
+        setFlights(response.data); // Set the flight data from backend
+      } catch (error) {
+        console.error("Error fetching flight data:", error);
+      }
+    };
+
+    fetchFlights();
   }, []);
 
   useEffect(() => {
@@ -50,7 +59,7 @@ const FlightDetails = () => {
       {/* Check if there are any filtered flights */}
       {filteredFlights.length > 0 ? (
         filteredFlights.map((flight) => (
-          <div className="booking-list-item mb-3" key={flight.id}>
+          <div className="booking-list-item mb-3" key={flight._id}>
             <div className="booking-list-item-inner container mt-3 mb-3">
               <div className="booking-list-top d-flex align-items-start flex-wrap">
                 <div className="flight-airway">

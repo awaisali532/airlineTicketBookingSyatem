@@ -15,11 +15,11 @@ const flightSchema = new mongoose.Schema({
     required: true,
   },
   departureTime: {
-    type: String,
+    type: Date,
     required: true,
   },
   arrivalTime: {
-    type: String,
+    type: Date,
     required: true,
   },
   duration: {

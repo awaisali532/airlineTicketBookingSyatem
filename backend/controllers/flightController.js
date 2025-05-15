@@ -34,7 +34,20 @@ export const addFlight = async (req, res) => {
       return res.status(400).json({ error: "Missing required flight fields" });
     }
 
-    const flight = new Flight(req.body);
+    // ✅ Convert departureTime and arrivalTime to Date objects
+    const flight = new Flight({
+      airline,
+      departureCity,
+      arrivalCity,
+      departureTime: new Date(departureTime), // Convert to Date object
+      arrivalTime: new Date(arrivalTime), // Convert to Date object
+      duration,
+      stops,
+      price,
+      logo,
+      fly,
+      arive,
+    });
     await flight.save();
     res.status(201).json({ message: "Flight added successfully", flight });
   } catch (err) {
@@ -91,5 +104,51 @@ export const getFlights = async (req, res) => {
     res
       .status(500)
       .json({ error: "Failed to fetch flights", details: err.message });
+  }
+};
+
+// Search flights based on user input
+export const searchFlights = async (req, res) => {
+  try {
+    const { from, to, date } = req.body;
+
+    if (!from || !to || !date) {
+      return res.status(400).json({ error: "Missing search parameters" });
+    }
+
+    // Convert date string to Date object (and remove time part)
+    const selectedDate = new Date(date);
+    selectedDate.setHours(0, 0, 0, 0);
+
+    const nextDay = new Date(selectedDate);
+    nextDay.setDate(nextDay.getDate() + 1);
+
+    const flights = await Flight.find({
+      departureCity: { $regex: new RegExp(from, "i") },
+      arrivalCity: { $regex: new RegExp(to, "i") },
+      fly: { $gte: selectedDate, $lt: nextDay }, // match only that date
+    });
+
+    res.json(flights);
+  } catch (err) {
+    res.status(500).json({ error: "Search failed", details: err.message });
+  }
+};
+
+// controllers/flightController.js
+
+export const getAvailableCities = async (req, res) => {
+  try {
+    const flights = await Flight.find({}, "departureCity arrivalCity");
+    const allCities = new Set();
+
+    flights.forEach((flight) => {
+      allCities.add(flight.departureCity);
+      allCities.add(flight.arrivalCity);
+    });
+
+    res.json([...allCities]);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch cities" });
   }
 };

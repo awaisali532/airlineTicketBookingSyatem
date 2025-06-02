@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"; // 🔵 Import this at the top
 import "../passengersCount/PassengersCount.css"; // optional custom CSS for a bit more style
-import { useLocation } from "react-router-dom"; // 🔵 Import this at the top
+import { useLocation, Navigate } from "react-router-dom"; // 🔵 Import this at the top
+import { useAuth } from "../../context/UserContext";
 
 const PassengerForm = () => {
   const { state } = useLocation(); // Get the data passed from the previous page
@@ -13,8 +14,10 @@ const PassengerForm = () => {
     child: 0,
     disabled: 0,
   });
+  const { isLogin, loading } = useAuth(); // ✅ get auth status
   const navigate = useNavigate();
-
+  if (loading) return <div>Loading...</div>;
+  if (!isLogin) return <Navigate to="/login" replace />;
   const handleAddPassenger = () => {
     if (passengerCount > 0) {
       setCounts((prev) => ({

@@ -19,6 +19,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "react-toastify/dist/ReactToastify.css";
 import { UserContext } from "./context/UserContext";
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 const App = () => {
   const { userdata, loading, setIsLogin } = useContext(UserContext);

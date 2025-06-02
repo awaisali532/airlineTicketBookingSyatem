@@ -25,7 +25,7 @@ const seatData = {
     { seatNumber: "5B", class: "first", isAvailable: true },
   ],
 
-  "Qatar Airways": [
+  "Airways Example": [
     { seatNumber: "1A", class: "business", isAvailable: true },
     { seatNumber: "1B", class: "first", isAvailable: true },
     { seatNumber: "2A", class: "economy", isAvailable: true },

@@ -1,21 +1,67 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SimpleHeader from "../../components/simpleHeader/SimpleHeader";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./BookingDetails.css";
 import bank_img from "../../assets/img/payment/bank.png";
 import jazzcash_img from "../../assets/img/payment/jazzcash.png";
 import easypesa_img from "../../assets/img/payment/easypesa.png";
 import paypal_img from "../../assets/img/payment/Paypal.png";
+import axios from "axios";
 
+import { useAuth } from "../../context/UserContext"; // Adjust the import path as necessary
 const BookingDetails = () => {
+  const { userdata } = useAuth();
+  const navigate = useNavigate();
   const { state } = useLocation();
   const flight = state.flight;
+  console.log(state);
+  const [selectedGender, setSelectedGender] = useState("");
   const passengers = state.passengers; // Make sure to include this line
-  const [selectedGender, setSelectedGender] = useState("male");
+  const selectedSeats = state.selectedSeats || [];
+  const totalPassengers = Object.values(passengers).reduce(
+    (sum, count) => sum + count,
+    0
+  );
+  const [paymentMethod, setPaymentMethod] = useState("pay-now");
+  const [passengerData, setPassengerData] = useState(() =>
+    Array.from({ length: totalPassengers }, (_, index) => ({
+      title: "",
+      name: "",
+      gender: "",
+      nationality: "",
+      mobileNumber: "",
+      dateOfBirth: "",
+      postalCode: "",
+      email: "",
+      mealType: "",
+      seatNumber: selectedSeats[index]?.seatNumber || "",
+      classType: selectedSeats[index]?.classType || "economy",
+    }))
+  );
+  console.log("passenger", passengerData);
+  const handleTitleAndGenderChange = (index, title) => {
+    const gender =
+      title === "Mr"
+        ? "Male"
+        : title === "Mrs" || title === "Miss"
+        ? "Female"
+        : "";
 
-  const handleGenderClick = (gender) => {
-    setSelectedGender(gender);
+    const updatedPassengerData = [...passengerData];
+    updatedPassengerData[index].title = title;
+    updatedPassengerData[index].gender = gender;
+    setPassengerData(updatedPassengerData);
   };
+
+  const handleChange = (index, field, value) => {
+    const updated = [...passengerData];
+    updated[index][field] = value;
+    setPassengerData(updated);
+  };
+
+  // const handleGenderClick = (gender) => {
+  //   setSelectedGender(gender.charAt(0).toUpperCase() + gender.slice(1));
+  // };
 
   const tax = 35;
   const discount = 10;
@@ -33,7 +79,47 @@ const BookingDetails = () => {
   const totalTax =
     taxPerPassenger * passengerTypes.reduce((sum, [, count]) => sum + count, 0);
   const totalAirfare = totalBaseFare + totalTax;
-  const totalPayable = totalAirfare - discount;
+  const totalAmount = totalAirfare - discount;
+  const handleBookingSubmit = async (e) => {
+    const backendUrl = "http://localhost:4000";
+    e.preventDefault();
+    const userId = userdata?.id; // Get user ID from UserContext
+    if (!userId) {
+      alert("User not logged in. Please log in to book a flight.");
+      return;
+    }
+    console.log("Booking form submitted with data:", passengerData);
+    const bookingPayload = {
+      userId: userId,
+      flightId: flight._id,
+      passengers: passengerData,
+      selectedSeats,
+      gender: selectedGender,
+      totalAmount: totalAmount,
+      paymentStatus: paymentMethod === "pay-now" ? "paid" : "unpaid",
+      date: new Date(),
+    };
+
+    try {
+      const res = await axios.post(
+        `${backendUrl}/api/bookings/create`,
+        bookingPayload
+      );
+
+      const data = res.data;
+      console.log("Booking response:", data);
+      if (paymentMethod === "pay-now") {
+        alert("Booking saved and redirecting to payment...");
+        navigate(`/payment/${data.bookingId}`);
+      } else {
+        alert("Booking saved. You can pay later from your dashboard.");
+        navigate("/my-bookings");
+      }
+    } catch (err) {
+      console.error("Booking error:", err.response?.data);
+      alert(err.response?.data?.message || "Something went wrong!");
+    }
+  };
 
   return (
     <div>
@@ -101,31 +187,14 @@ const BookingDetails = () => {
                   <div key={index} className="mb-4">
                     <div className="primary-contact">
                       <i className="bi bi-person"></i>
-                      <h2 className="title">Passenger {index + 1}:</h2>
+                      <h2 className="title">
+                        Passenger {index + 1} - Seat:{" "}
+                        {selectedSeats[index]?.seatNumber || "Not assigned"} (
+                        {selectedSeats[index]?.classType || "Not assigned"})
+                      </h2>
                     </div>
                     <div className="booking-details-wrap">
-                      <form action="#">
-                        <div className="form-grp select-form">
-                          <div className="icon">
-                            <i className="bi bi-person-plus"></i>
-                          </div>
-                          <div className="form">
-                            <label htmlFor="shortBy">
-                              Select Travellers from your Favourties List
-                            </label>
-                            <select
-                              id="shortBy"
-                              name="select"
-                              className="form-select"
-                            >
-                              <option value="">Select One..</option>
-                              <option>Select Two..</option>
-                              <option>Select Three..</option>
-                              <option>Select Four..</option>
-                              <option>Select Five..</option>
-                            </select>
-                          </div>
-                        </div>
+                      <form onSubmit={handleBookingSubmit}>
                         <ul>
                           <li>
                             <div className="form-grp">
@@ -137,22 +206,33 @@ const BookingDetails = () => {
                                   id="title"
                                   name="select"
                                   className="form-select"
+                                  value={passengerData[index].title}
+                                  onChange={(e) => {
+                                    handleTitleAndGenderChange(
+                                      index,
+                                      e.target.value
+                                    );
+                                  }}
                                 >
-                                  <option value="">Mr.</option>
-                                  <option>Mrs.</option>
-                                  <option>Others..</option>
+                                  <option value="">Select Tittle</option>
+                                  <option value="Mr">Mr.</option>
+                                  <option value="Mrs">Mrs.</option>
+                                  <option value="Miss">Miss.</option>
+                                  <option value="Others">Others..</option>
                                 </select>
                               </div>
                             </div>
                           </li>
                           <li>
                             <div className="form-grp">
-                              <input type="text" placeholder="Give Name" />
-                            </div>
-                          </li>
-                          <li>
-                            <div className="form-grp">
-                              <input type="text" placeholder="Sur Name *" />
+                              <input
+                                type="text"
+                                placeholder="Enter Name"
+                                value={passengerData[index].name}
+                                onChange={(e) =>
+                                  handleChange(index, "name", e.target.value)
+                                }
+                              />
                             </div>
                           </li>
                         </ul>
@@ -161,22 +241,31 @@ const BookingDetails = () => {
                           <ul>
                             <li
                               className={
-                                selectedGender === "male" ? "active" : ""
+                                passengerData[index].gender === "Male"
+                                  ? "active"
+                                  : ""
                               }
-                              onClick={() => handleGenderClick("male")}
+                              onClick={() =>
+                                handleChange(index, "gender", "Male")
+                              }
                             >
                               <i className="bi bi-gender-male"></i> Male
                             </li>
                             <li
                               className={
-                                selectedGender === "female" ? "active" : ""
+                                passengerData[index].gender === "Female"
+                                  ? "active"
+                                  : ""
                               }
-                              onClick={() => handleGenderClick("female")}
+                              onClick={() =>
+                                handleChange(index, "gender", "Female")
+                              }
                             >
                               <i className="bi bi-gender-female"></i> Female
                             </li>
                           </ul>
                         </div>
+
                         <div className="row">
                           <div className="col-md-6">
                             <div className="form-grp">
@@ -187,16 +276,32 @@ const BookingDetails = () => {
                                 <label htmlFor="nationality">Nationality</label>
                                 <select
                                   id="nationality"
-                                  name="select"
+                                  name="nationality"
                                   className="form-select"
+                                  value={passengerData[index].nationality}
+                                  onChange={(e) =>
+                                    handleChange(
+                                      index,
+                                      "nationality",
+                                      e.target.value
+                                    )
+                                  }
                                 >
-                                  <option value="">Bangladesh</option>
-                                  <option>United States</option>
-                                  <option>Dubai</option>
-                                  <option>Saudi Arabia</option>
-                                  <option>Australia</option>
-                                  <option>South Africa</option>
-                                  <option>Pakistan</option>
+                                  <option value="">Select Country</option>
+                                  <option value="Bangladesh">Bangladesh</option>
+                                  <option value="United States">
+                                    United States
+                                  </option>
+                                  <option value="Dubai">Dubai</option>
+                                  <option value="Saudi Arabia">
+                                    {" "}
+                                    Saudi Arabia{" "}
+                                  </option>
+                                  <option value="Australia">Australia</option>
+                                  <option value="South Africa">
+                                    South Africa
+                                  </option>
+                                  <option value="Pakistan">Pakistan</option>
                                 </select>
                               </div>
                             </div>
@@ -210,6 +315,14 @@ const BookingDetails = () => {
                                 <input
                                   type="number"
                                   placeholder="Mobile Number *"
+                                  value={passengerData[index].mobileNumber}
+                                  onChange={(e) =>
+                                    handleChange(
+                                      index,
+                                      "mobileNumber",
+                                      e.target.value
+                                    )
+                                  }
                                 />
                               </div>
                             </div>
@@ -222,9 +335,18 @@ const BookingDetails = () => {
                               <div className="form">
                                 <label htmlFor="shortBy">Date of Birth</label>
                                 <input
-                                  type="text"
+                                  type="date"
                                   className="date"
                                   placeholder="Select Date"
+                                  value={passengerData[index].dateOfBirth}
+                                  onChange={(e) =>
+                                    handleChange(
+                                      index,
+                                      "dateOfBirth",
+                                      e.target.value
+                                    )
+                                  }
+                                  max={new Date().toISOString().split("T")[0]}
                                 />
                               </div>
                             </div>
@@ -235,7 +357,18 @@ const BookingDetails = () => {
                                 <i className="bi bi-house"></i>
                               </div>
                               <div className="form">
-                                <input type="text" placeholder="Post Code *" />
+                                <input
+                                  type="number"
+                                  placeholder="Post Code *"
+                                  value={passengerData[index].postalCode}
+                                  onChange={(e) =>
+                                    handleChange(
+                                      index,
+                                      "postalCode",
+                                      e.target.value
+                                    )
+                                  }
+                                />
                               </div>
                             </div>
                           </div>
@@ -250,19 +383,10 @@ const BookingDetails = () => {
                                   type="email"
                                   id="email"
                                   placeholder="youinfo@gmail.com"
-                                />
-                              </div>
-                            </div>
-                          </div>
-                          <div className="col-md-6">
-                            <div className="form-grp">
-                              <div className="icon">
-                                <i className="bi bi-star-fill text-warning"></i>
-                              </div>
-                              <div className="form">
-                                <input
-                                  type="text"
-                                  placeholder="FlyerNumber :  98265"
+                                  value={passengerData[index].email}
+                                  onChange={(e) =>
+                                    handleChange(index, "email", e.target.value)
+                                  }
                                 />
                               </div>
                             </div>
@@ -273,40 +397,27 @@ const BookingDetails = () => {
                             <div className="form">
                               <select
                                 id="optional"
-                                name="select"
+                                name="mealType"
                                 className="form-select"
+                                value={passengerData[index].mealType}
+                                onChange={(e) =>
+                                  handleChange(
+                                    index,
+                                    "mealType",
+                                    e.target.value
+                                  )
+                                }
                               >
-                                <option value="">
-                                  Select meal type ( optional )
-                                </option>
-                                <option>Select meal type ( optional )</option>
-                                <option>Select meal type ( optional )</option>
-                                <option>Select meal type ( optional )</option>
+                                <option value="">Select Meal Preference</option>
+                                <option value="Veg">Veg</option>
+                                <option value="Non-Veg">Non-Veg</option>
+                                <option value="Vegan">Vegan</option>
+                                <option value="Kosher">Kosher</option>
+                                <option value="Halal">Halal</option>
+                                <option value="None">None</option>
                               </select>
                             </div>
                           </div>
-                          <div className="form-grp">
-                            <div className="form">
-                              <select
-                                id="optionalTwo"
-                                name="select"
-                                className="form-select"
-                              >
-                                <option value="">
-                                  Request wheelchair ( optional )
-                                </option>
-                                <option>Request wheelchair ( optional )</option>
-                                <option>Select meal type ( optional )</option>
-                                <option>Select meal type ( optional )</option>
-                              </select>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="form-grp checkbox-grp">
-                          <input type="checkbox" id="checkbox" />
-                          <label htmlFor="checkbox">
-                            Add this person to passenger quick pick list
-                          </label>
                         </div>
                       </form>
                     </div>
@@ -350,19 +461,6 @@ const BookingDetails = () => {
 
                 <div className="widget">
                   <h2 className="widget-title heading-h2">
-                    Select Discount Option
-                  </h2>
-                  <form action="#" className="discount-form">
-                    <i className="bi bi-tag"></i>
-                    <input type="text" placeholder="Enter Code" />
-                    <button type="submit">
-                      <i className="bi bi-check-circle-fill"></i>
-                    </button>
-                  </form>
-                </div>
-
-                <div className="widget">
-                  <h2 className="widget-title heading-h2">
                     Your Preferred Bank
                   </h2>
                   <ul className="preferred-bank-wrap">
@@ -388,17 +486,18 @@ const BookingDetails = () => {
                     </li>
                   </ul>
                 </div>
-
                 <div className="widget">
                   <h2 className="widget-title heading-h2">
                     Your price summary
                   </h2>
+
                   <div className="price-summary-top">
                     <ul>
                       <li>Details</li>
                       <li>Amount</li>
                     </ul>
                   </div>
+
                   <div className="price-summary-detail">
                     <ul>
                       {fareDetails.map(({ type, count, unitPrice, total }) => (
@@ -410,21 +509,49 @@ const BookingDetails = () => {
                       ))}
                       <li>
                         Tax x{" "}
-                        {passengerTypes.reduce((sum, [, c]) => sum + c, 0)}
+                        {passengerTypes.reduce(
+                          (sum, [, count]) => sum + count,
+                          0
+                        )}
                         <span>${totalTax.toFixed(2)}</span>
                       </li>
                       <li>
-                        Total Airfare: <span>${totalAirfare.toFixed(2)}</span>
+                        Discount <span>-${discount.toFixed(2)}</span>
                       </li>
-                      <li>
-                        Discount: <span>${discount.toFixed(2)}</span>
-                      </li>
-                      <li>
-                        Total Payable<span>${totalPayable.toFixed(2)}</span>
+                      <li className="total">
+                        Total <span>${totalAmount.toFixed(2)}</span>
                       </li>
                     </ul>
-                    <a href="#" className="btn">
-                      Pay now
+
+                    <div
+                      style={{
+                        display: "flex",
+                        gap: "10px",
+                        marginBottom: "10px",
+                      }}
+                    >
+                      <button
+                        className={`btn ${
+                          paymentMethod === "pay-now" ? "active" : ""
+                        }`}
+                        onClick={() => setPaymentMethod("pay-now")}
+                      >
+                        Pay now
+                      </button>
+                      <button
+                        className={`btn ${
+                          paymentMethod === "pay-later" ? "active" : ""
+                        }`}
+                        onClick={() => setPaymentMethod("pay-later")}
+                      >
+                        Pay later
+                      </button>
+                    </div>
+
+                    <a href="#" className="btn" onClick={handleBookingSubmit}>
+                      {paymentMethod === "pay-now"
+                        ? "Proceed to Payment"
+                        : "Save and Pay Later"}
                     </a>
                   </div>
                 </div>

@@ -1,8 +1,6 @@
-// ✅ UPDATED: SeatSelection.jsx
-
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import seatData from "../../data/SeatData";
+import axios from "axios"; // <-- install if needed
 import "../selectSeats/SelectSeats.css";
 
 const SeatSelection = () => {
@@ -11,44 +9,55 @@ const SeatSelection = () => {
   const passengers = state?.passengers;
   const totalPassengerCount = state?.total;
   const [selectedClass, setSelectedClass] = useState("economy");
+  const [seatsData, setSeatsData] = useState([]);
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [lockedSeats, setLockedSeats] = useState([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchSeats = async () => {
+      try {
+        const res = await axios.get(
+          `http://localhost:4000/api/seats/${flight.airline}`
+        );
+        setSeatsData(res.data); // Backend se aayi sari seats
+      } catch (err) {
+        console.error("Error fetching seat data:", err);
+      }
+    };
+
+    if (flight?.airline) {
+      fetchSeats();
+    }
+  }, [flight]);
 
   if (!flight || !passengers || !totalPassengerCount) {
     return <p>Error: Missing flight or passenger data.</p>;
   }
 
-  const airlineSeats = seatData[flight.airline];
-  if (!airlineSeats) {
-    return <p>No seat data available for this airline.</p>;
-  }
-
-  const seats = airlineSeats.filter((seat) => seat.class === selectedClass);
+  const seats = seatsData.filter((seat) => seat.class === selectedClass);
 
   const handleSeatClick = (seat) => {
     if (
       !seat.isAvailable ||
-      selectedSeats.includes(seat.seatNumber) ||
+      selectedSeats.some((s) => s.seatNumber === seat.seatNumber) ||
       lockedSeats.includes(seat.seatNumber)
     ) {
       return;
     }
 
     if (selectedSeats.length < totalPassengerCount) {
-      setSelectedSeats([...selectedSeats, seat.seatNumber]);
-      setLockedSeats([...lockedSeats, seat.seatNumber]); // Disable immediately
+      setSelectedSeats([
+        ...selectedSeats,
+        { seatNumber: seat.seatNumber, classType: seat.class },
+      ]);
+      setLockedSeats([...lockedSeats, seat.seatNumber]);
     }
   };
 
   const handleNextPage = () => {
-    if (
-      selectedSeats.length === 0 ||
-      selectedSeats.length < totalPassengerCount
-    ) {
-      alert(
-        `Please select the required number of seats ${totalPassengerCount}.`
-      );
+    if (selectedSeats.length < totalPassengerCount) {
+      alert(`Please select ${totalPassengerCount} seat(s).`);
       return;
     }
 
@@ -56,6 +65,7 @@ const SeatSelection = () => {
       state: { selectedSeats, passengers, flight },
     });
   };
+  console.log("Selected Seats:", selectedSeats);
 
   return (
     <div className="container">
@@ -77,18 +87,19 @@ const SeatSelection = () => {
           ))}
         </div>
 
-        {/* Seats */}
         <div
           className="seat-grid d-flex flex-wrap"
           style={{ maxWidth: "800px" }}
         >
           {seats.length > 0 ? (
             seats.map((seat) => {
-              const isSelected = selectedSeats.includes(seat.seatNumber);
+              const isSelected = selectedSeats.some(
+                (s) => s.seatNumber === seat.seatNumber
+              );
               const isDisabled = lockedSeats.includes(seat.seatNumber);
               return (
                 <div
-                  key={seat.seatNumber}
+                  key={seat._id}
                   className={`seat border m-2 p-3 text-center seat-item
                     ${seat.isAvailable ? "available" : "unavailable"}
                     ${isSelected ? "selected" : ""}
@@ -111,22 +122,28 @@ const SeatSelection = () => {
           )}
         </div>
 
-        {/* ✅ Show selected seats live with delete button */}
+        {/* Selected seats list */}
         <div className="mt-4">
           <h5>Selected Seats:</h5>
           {selectedSeats.length > 0 ? (
             <ul className="list-group">
               {selectedSeats.map((seat) => (
                 <li
-                  key={seat}
+                  key={seat.seatNumber}
                   className="list-group-item d-flex justify-content-between align-items-center"
                 >
-                  Seat {seat}
+                  Seat {seat.seatNumber} ({seat.classType})
                   <button
                     className="btn btn-sm btn-danger"
                     onClick={() => {
-                      setSelectedSeats(selectedSeats.filter((s) => s !== seat));
-                      setLockedSeats(lockedSeats.filter((s) => s !== seat));
+                      setSelectedSeats(
+                        selectedSeats.filter(
+                          (s) => s.seatNumber !== seat.seatNumber
+                        )
+                      );
+                      setLockedSeats(
+                        lockedSeats.filter((s) => s !== seat.seatNumber)
+                      );
                     }}
                   >
                     ❌
@@ -139,7 +156,6 @@ const SeatSelection = () => {
           )}
         </div>
 
-        {/* Proceed button */}
         <div className="mt-4">
           <button className="btn btn-primary" onClick={handleNextPage}>
             Proceed to Booking

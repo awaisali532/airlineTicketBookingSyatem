@@ -16,7 +16,7 @@
     "@fortawesome/react-fontawesome": "^0.2.2",
     "axios": "^1.8.4",
     "bootstrap": "^5.3.3",
-    "bootstrap-icons": "^1.11.3",
+    "bootstrap-icons": "^1.13.1",
     "date-fns": "^4.1.0",
     "intersection-observer": "^0.12.2",
     "odometer": "^0.4.8",

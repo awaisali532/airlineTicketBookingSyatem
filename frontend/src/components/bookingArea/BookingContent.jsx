@@ -10,10 +10,9 @@ const Bookingcontent = () => {
   const [to, setTo] = useState("");
   const [trip, setTrip] = useState("");
   const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
-  const [suggestions, setSuggestions] = useState([]); // To store suggestions
-  const [activeField, setActiveField] = useState(""); // Track the active field
   const [cityList, setCityList] = useState([]);
+
+  const filteredToCities = cityList.filter((city) => city !== from);
 
   //Fetch data of cities from the backend
   const BASE_URL = import.meta.env.VITE_BACKEND_URL;
@@ -33,41 +32,15 @@ const Bookingcontent = () => {
   const navigate = useNavigate(); // 🟡 Added for navigation
 
   const handleFromChange = (e) => {
-    const value = e.target.value;
-    setFrom(value);
-    setActiveField("from");
-
-    const filtered = cityList.filter((city) =>
-      city.toLowerCase().startsWith(value.toLowerCase())
-    );
-    setSuggestions(filtered);
+    setFrom(e.target.value);
   };
 
   const handleToChange = (e) => {
-    const value = e.target.value;
-    setTo(value);
-    setActiveField("to");
-
-    const filtered = cityList.filter((city) =>
-      city.toLowerCase().startsWith(value.toLowerCase())
-    );
-    setSuggestions(filtered);
-  };
-
-  const handleSelect = (value, field) => {
-    if (field === "from") {
-      setFrom(value);
-    } else if (field === "to") {
-      setTo(value);
-    }
-
-    // Clear suggestions and close the suggestion box
-    setSuggestions([]);
-    setActiveField(""); // Reset active field after selection
+    setTo(e.target.value);
   };
 
   const isFormValid = () => {
-    return from.trim() && to.trim() && trip && startDate && endDate;
+    return from.trim() && to.trim() && trip && startDate;
   };
 
   const handleSubmit = (e) => {
@@ -83,7 +56,7 @@ const Bookingcontent = () => {
       to,
       trip,
       startDate,
-      endDate,
+
       // promoCode,
     };
 
@@ -108,25 +81,13 @@ const Bookingcontent = () => {
             <div className="form-grp">
               <label htmlFor="from">From</label>
               <input
-                type="text"
+                list="cityOptionsFrom"
                 id="from"
                 name="from"
                 placeholder="City or Airport"
                 value={from}
-                onChange={handleFromChange}
+                onChange={(e) => setFrom(e.target.value)}
               />
-              {activeField === "from" && suggestions.length > 0 && (
-                <ul className="suggestions-list">
-                  {suggestions.map((suggestion, index) => (
-                    <li
-                      key={index}
-                      onClick={() => handleSelect(suggestion, "from")}
-                    >
-                      {suggestion}
-                    </li>
-                  ))}
-                </ul>
-              )}
             </div>
           </div>
           {/* To with exchange icon */}
@@ -134,27 +95,14 @@ const Bookingcontent = () => {
             <div className="form-grp">
               <label htmlFor="to">To</label>
               <input
-                type="text"
+                list="cityOptionsTo"
                 id="to"
                 name="to"
                 placeholder="City or Airport"
                 value={to}
-                onChange={handleToChange}
-                className="position-relative"
-                style={{ zIndex: 1 }}
+                onChange={(e) => setTo(e.target.value)}
               />
-              {activeField === "to" && suggestions.length > 0 && (
-                <ul className="suggestions-list">
-                  {suggestions.map((suggestion, index) => (
-                    <li
-                      key={index}
-                      onClick={() => handleSelect(suggestion, "to")}
-                    >
-                      {suggestion}
-                    </li>
-                  ))}
-                </ul>
-              )}
+
               <button
                 type="button"
                 className="exchange-icon"
@@ -234,6 +182,17 @@ const Bookingcontent = () => {
           </button>
         </div>
       </form>
+      <datalist id="cityOptionsFrom">
+        {cityList.map((city, index) => (
+          <option key={index} value={city} />
+        ))}
+      </datalist>
+
+      <datalist id="cityOptionsTo">
+        {filteredToCities.map((city, index) => (
+          <option key={index} value={city} />
+        ))}
+      </datalist>
     </div>
   );
 };

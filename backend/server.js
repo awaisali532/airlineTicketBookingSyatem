@@ -6,6 +6,8 @@ import connectDB from "./config/mogodb.js";
 import authRouter from "./routes/authRoutes.js"; // Authentication routes
 import userRouter from "./routes/userRoutes.js";
 import flightRouter from "./routes/flightRoutes.js"; // Flight routes
+import seatRoutes from "./routes/seatRoutes.js"; // Seat routes
+import bookingRoutes from "./routes/bookingRoutes.js";
 const app = express();
 const PORT = process.env.PORT || 4000;
 connectDB();
@@ -24,6 +26,9 @@ app.get("/", (req, res) => res.send("Api working"));
 app.use("/api/auth", authRouter); // Authentication routes
 app.use("/api/user", userRouter); // Authentication routes
 app.use("/api/flight", flightRouter);
+app.use("/api/seats", seatRoutes);
+app.use("/api/bookings", bookingRoutes);
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

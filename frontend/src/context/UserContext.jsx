@@ -98,7 +98,8 @@ export const UserContextProvider = ({ children }) => {
           withCredentials: true,
         })
         .then((res) => {
-          setuserdata(res.data.user);
+          console.log("API Response:", res.data);
+          setuserdata(res.data.userData);
           setIsLogin(true);
         })
         .catch((err) => {

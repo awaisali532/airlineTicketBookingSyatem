@@ -1,0 +1,38 @@
+.ticket-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.ticket-card {
+  flex: 1 1 300px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 16px;
+  padding: 20px;
+  position: relative;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.ticket-info {
+  margin-bottom: 1rem;
+}
+
+.ticket-status {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 6px 12px;
+  font-weight: bold;
+  border-radius: 12px;
+  color: #fff;
+}
+
+.ticket-status.paid {
+  background-color: #28a745;
+}
+
+.ticket-status.unpaid {
+  background-color: #dc3545;
+}

@@ -14,7 +14,7 @@ const BookingDetails = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
   const flight = state.flight;
-  console.log(state);
+  // console.log(state);
   const [selectedGender, setSelectedGender] = useState("");
   const passengers = state.passengers; // Make sure to include this line
   const selectedSeats = state.selectedSeats || [];
@@ -38,7 +38,6 @@ const BookingDetails = () => {
       classType: selectedSeats[index]?.classType || "economy",
     }))
   );
-  console.log("passenger", passengerData);
   const handleTitleAndGenderChange = (index, title) => {
     const gender =
       title === "Mr"
@@ -88,7 +87,8 @@ const BookingDetails = () => {
       alert("User not logged in. Please log in to book a flight.");
       return;
     }
-    console.log("Booking form submitted with data:", passengerData);
+    
+    // console.log("Booking form submitted with data:", passengerData);
     const bookingPayload = {
       userId: userId,
       flightId: flight._id,
@@ -96,7 +96,7 @@ const BookingDetails = () => {
       selectedSeats,
       gender: selectedGender,
       totalAmount: totalAmount,
-      paymentStatus: paymentMethod === "pay-now" ? "paid" : "unpaid",
+      paymentStatus: paymentMethod === "pay-now" ? "unpaid" : "unpaid",
       date: new Date(),
     };
 
@@ -107,20 +107,21 @@ const BookingDetails = () => {
       );
 
       const data = res.data;
-      console.log("Booking response:", data);
+      console.log("Booking response:", data.data._id);
+
       if (paymentMethod === "pay-now") {
+        console.log(userId);
         alert("Booking saved and redirecting to payment...");
-        navigate(`/payment/${data.bookingId}`);
+        navigate(`/payment/${data.data._id}`);
       } else {
         alert("Booking saved. You can pay later from your dashboard.");
-        navigate("/my-bookings");
+        navigate("/");
       }
     } catch (err) {
       console.error("Booking error:", err.response?.data);
       alert(err.response?.data?.message || "Something went wrong!");
     }
   };
-
   return (
     <div>
       <SimpleHeader />

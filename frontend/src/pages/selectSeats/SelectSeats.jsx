@@ -65,7 +65,6 @@ const SeatSelection = () => {
       state: { selectedSeats, passengers, flight },
     });
   };
-  console.log("Selected Seats:", selectedSeats);
 
   return (
     <div className="container">

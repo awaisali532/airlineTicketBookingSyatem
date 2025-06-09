@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-const mongoose = require("mongoose");
-=======
 import mongoose from "mongoose";
->>>>>>> origin/talha-laptop-changing
 
 const paymentSchema = new mongoose.Schema({
   bookingId: {
@@ -31,20 +27,8 @@ const paymentSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-<<<<<<< HEAD
-  status: {
-    type: String,
-    enum: ["pending", "successful"],
-    default: "pending",
-  },
-});
-
-module.exports = mongoose.model("Payment", paymentSchema);
-=======
- 
 });
 
 const Payment = mongoose.model("Payment", paymentSchema);
 
 export default Payment;
->>>>>>> origin/talha-laptop-changing

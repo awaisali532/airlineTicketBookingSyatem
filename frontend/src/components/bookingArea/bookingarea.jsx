@@ -1,16 +1,17 @@
-import React, { useState } from "react";
+import  { useContext } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "./Bookingarea.css";
+import BookedTickets from "./BookedTickets";
 import Bookingcontent from "./BookingContent";
 import { useNavigate } from "react-router-dom";
-
+import { UserContext } from "../../context/UserContext";
 const Bookingarea = () => {
-  const [signedIn, setSignedIn] = useState(false); // Track if the user is signed in
+  const { isLogin, userdata } = useContext(UserContext);
   const navigate = useNavigate();
   const handleSignIn = () => {
-    setSignedIn(true); // Simulate a sign-in action
+    setisLogin(true); // Simulate a sign-in action
     navigate("/login");
   };
 
@@ -109,26 +110,24 @@ const Bookingarea = () => {
                   </div>
 
                   {/* My Trips Tab Content */}
-                  <div
-                    className="tab-pane fade"
-                    id="trips-tab-pane"
-                    role="tabpanel"
-                    aria-labelledby="trips-tab"
-                  >
-                    {signedIn ? (
-                      <div>Your trips details will show here.</div>
-                    ) : (
-                      <div className="sign-in-prompt">
-                        <p>Please sign in to view your trips.</p>
-                        <button
-                          onClick={handleSignIn}
-                          className="btn custom_btn"
-                        >
-                          Sign In
-                        </button>
-                      </div>
-                    )}
-                  </div>
+                 <div
+  className="tab-pane fade"
+  id="trips-tab-pane"
+  role="tabpanel"
+  aria-labelledby="trips-tab"
+>
+  {isLogin ? (
+    <BookedTickets userId={userdata?._id} />
+  ) : (
+    <div className="sign-in-prompt">
+      <p>Please sign in to view your trips.</p>
+      <button onClick={handleSignIn} className="btn custom_btn">
+        Sign In
+      </button>
+    </div>
+  )}
+</div>
+
 
                   {/* Check-in Tab Content */}
                   <div
@@ -137,7 +136,7 @@ const Bookingarea = () => {
                     role="tabpanel"
                     aria-labelledby="check-tab"
                   >
-                    {signedIn ? (
+                    {isLogin ? (
                       <div>Check-in details will show here.</div>
                     ) : (
                       <div className="sign-in-prompt">
@@ -159,7 +158,7 @@ const Bookingarea = () => {
                     role="tabpanel"
                     aria-labelledby="flight-tab"
                   >
-                    {signedIn ? (
+                    {isLogin ? (
                       <div>Flight status details will show here.</div>
                     ) : (
                       <div className="sign-in-prompt">

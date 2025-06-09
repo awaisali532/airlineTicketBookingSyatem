@@ -26,3 +26,22 @@ export const getBookingsByUser = async (req, res) => {
       .json({ success: false, message: "Failed to fetch bookings", error });
   }
 };
+
+
+// ✅ Get booking by ID (for payment page etc.)
+export const getBookingById = async (req, res) => {
+  try {
+    const bookingId = req.params.bookingId;
+
+    const booking = await Booking.findById(bookingId).populate("flightId");
+
+    if (!booking) {
+      return res.status(404).json({ success: false, message: "Booking not found" });
+    }
+
+    res.status(200).json({ success: true, data: booking });
+  } catch (error) {
+    console.error("Error fetching booking:", error);
+    res.status(500).json({ success: false, message: "Failed to fetch booking", error });
+  }
+};

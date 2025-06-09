@@ -1,6 +1,7 @@
 import express from "express";
 import {
   createBooking,
+  getBookingById,
   getBookingsByUser,
 } from "../controllers/bookingController.js";
 
@@ -11,5 +12,5 @@ router.post("/create", createBooking);
 
 // ✅ GET: Get all bookings by user ID
 router.get("/user/:userId", getBookingsByUser);
-
+router.get("/:bookingId", getBookingById)
 export default router;

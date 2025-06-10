@@ -10,7 +10,7 @@ import axios from "axios";
 
 import { useAuth } from "../../context/UserContext"; // Adjust the import path as necessary
 const BookingDetails = () => {
-  const { userdata } = useAuth();
+  const { userdata, loading } = useAuth();
   const navigate = useNavigate();
   const { state } = useLocation();
   const flight = state.flight;
@@ -83,11 +83,17 @@ const BookingDetails = () => {
     const backendUrl = "http://localhost:4000";
     e.preventDefault();
     const userId = userdata?.id; // Get user ID from UserContext
+    console.log("User id found", userId);
+    if (loading) {
+      alert("Please wait, user data is still loading...");
+      return;
+    }
+
     if (!userId) {
       alert("User not logged in. Please log in to book a flight.");
       return;
     }
-    
+
     // console.log("Booking form submitted with data:", passengerData);
     const bookingPayload = {
       userId: userId,

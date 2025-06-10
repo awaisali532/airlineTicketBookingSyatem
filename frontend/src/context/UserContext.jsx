@@ -100,6 +100,9 @@ export const UserContextProvider = ({ children }) => {
         .then((res) => {
           console.log("API Response:", res.data);
           setuserdata(res.data.userData);
+          setuserdata(res.data.userData);
+          console.log("Set user data:", res.data.userData); // ✅ log it here
+
           setIsLogin(true);
         })
         .catch((err) => {

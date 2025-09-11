@@ -1,85 +1,76 @@
-import { useEffect, useState } from "react";
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
-import "../payment/Payment.css";
-import { toast } from "react-toastify";
+import { useEffect, useState } from "react";
 
-const PaymentPage = () => {
-  const { bookingId } = useParams(); // ✅ route param
-  const [formData, setFormData] = useState({
-    accountHolderName: "",
-    bankName: "",
-    accountNumber: "",
-    ifscCode: "",
-  });
-
-  const [amount, setAmount] = useState(0);
-  const [userId, setUserId] = useState("");
-  const [message, setMessage] = useState("");
+const Payment = () => {
+  const { bookingId } = useParams();
   const navigate = useNavigate();
+  const [amount, setAmount] = useState(0);
 
   useEffect(() => {
-    const fetchBooking = async () => {
-      try {
-        const res = await axios.get(`http://localhost:4000/api/bookings/${bookingId}`);
-        const booking = res.data.data;
-        setAmount(booking.totalAmount);
-        setUserId(booking.userId);
-      } catch (err) {
-        console.error("Failed to fetch booking:", err);
-        setMessage("Invalid booking ID or server error");
-        navigate("/");
-      }
+    const fetchAmount = async () => {
+      const res = await fetch(
+        `http://localhost:4000/api/bookings/${bookingId}`
+      );
+      const data = await res.json();
+      setAmount(data.data.totalAmount);
     };
-
-    if (bookingId) fetchBooking();
+    if (bookingId) fetchAmount();
   }, [bookingId]);
 
-  const handleChange = (e) => {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      const res = await axios.post("http://localhost:4000/api/payments/create", {
-        ...formData,
-        bookingId,
-        userId,
-        amount,
-      });
-
-      setMessage(res.data.message);
-    toast.success(res.data.message || "Payment successful");
-
-    // Redirect after short delay (e.g. 2 seconds)
-    setTimeout(() => {
-      navigate("/");
-    }, 2000);
-
-  } catch (err) {
-    const errorMsg = err.response?.data?.message || "Payment failed";
-    setMessage(errorMsg);
-    toast.error(errorMsg);
-  }
-
-  };
-
   return (
-    <div className="payment-container">
-      <h2>Make Your Payment</h2>
-      <p className="amount-info">Amount to Pay: <strong>Rs. {amount}</strong></p>
-      <form className="payment-form" onSubmit={handleSubmit}>
-        <input name="accountHolderName" placeholder="Account Holder Name" onChange={handleChange} required />
-        <input name="bankName" placeholder="Bank Name" onChange={handleChange} required />
-        <input name="accountNumber" placeholder="Account Number" onChange={handleChange} required />
-        <input name="ifscCode" placeholder="IFSC Code" onChange={handleChange} required />
-        <button type="submit">Submit Payment</button>
-      </form>
-      {message && <p className="status">{message}</p>}
-    </div>
+    <PayPalScriptProvider
+      options={{
+        "client-id": import.meta.env.VITE_PAYPAL_CLIENT_ID,
+        currency: "USD",
+      }}
+    >
+      <PayPalButtons
+        createOrder={async () => {
+          const res = await fetch(
+            "http://localhost:4000/api/paypal/create-order",
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ totalAmount: amount }),
+            }
+          );
+          const order = await res.json();
+          return order.id;
+        }}
+        onApprove={async (data) => {
+          const res = await fetch(
+            "http://localhost:4000/api/paypal/capture-order",
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ orderID: data.orderID }),
+            }
+          );
+          const paymentDetails = await res.json();
+
+          // Update booking
+          await fetch(
+            `http://localhost:4000/api/bookings/update-payment-status/${bookingId}`,
+            {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ paymentStatus: "paid" }),
+            }
+          );
+
+          alert("Payment successful!");
+          setTimeout(() => {
+            navigate("/payment-success"); // redirect to success page
+          }, 2000);
+        }}
+        onError={(err) => {
+          console.error("PayPal Error:", err);
+          alert("Payment failed!");
+        }}
+      />
+    </PayPalScriptProvider>
   );
 };
 
-export default PaymentPage;
+export default Payment;

@@ -14,7 +14,7 @@ import SelectSeats from "./pages/selectSeats/SelectSeats";
 import Login from "./pages/login/Login";
 import Forget from "./pages/login/Forget";
 import NewPassword from "./pages/login/NewPassword";
-import PaymentPage from "./pages/payment/payment";
+import PaymentPage from "./pages/payment/Payment";
 import BookedTickets from "./components/bookingArea/BookedTickets";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -22,6 +22,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "react-toastify/dist/ReactToastify.css";
 import { UserContext } from "./context/UserContext";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import PaymentSuccess from "./pages/PaymentSuccess";
 const App = () => {
   const { userdata, loading, setIsLogin } = useContext(UserContext);
   const navigate = useNavigate();
@@ -48,8 +49,8 @@ const App = () => {
         <Route path="/passenger-count" element={<PassengersCount />} />
         <Route path="/select-seats" element={<SelectSeats />} />
         <Route path="/payment/:bookingId" element={<PaymentPage />} />
+        <Route path="/payment-success" element={<PaymentSuccess />} />
         <Route path="/ticket" element={<BookedTickets />} />
-
       </Routes>
     </>
   );

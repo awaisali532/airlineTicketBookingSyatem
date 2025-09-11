@@ -38,6 +38,7 @@ const BookingDetails = () => {
       classType: selectedSeats[index]?.classType || "economy",
     }))
   );
+
   const handleTitleAndGenderChange = (index, title) => {
     const gender =
       title === "Mr"
@@ -128,6 +129,7 @@ const BookingDetails = () => {
       alert(err.response?.data?.message || "Something went wrong!");
     }
   };
+
   return (
     <div>
       <SimpleHeader />
@@ -556,9 +558,13 @@ const BookingDetails = () => {
                     </div>
 
                     <a href="#" className="btn" onClick={handleBookingSubmit}>
-                      {paymentMethod === "pay-now"
-                        ? "Proceed to Payment"
-                        : "Save and Pay Later"}
+                      {paymentMethod === "pay-now" && (
+                        <div style={{ marginTop: "20px" }}>
+                          <div id="paypal-button-container">
+                            Proced to payment
+                          </div>
+                        </div>
+                      )}
                     </a>
                   </div>
                 </div>
